@@ -21,32 +21,32 @@ export function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="flex flex-col">
                <span className="text-[10px] font-bold text-brand-blue uppercase tracking-[0.2em] mb-4">Connect With Us</span>
-               <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-brand-dark tracking-tight leading-tight">
+               <h1 className="text-3xl md:text-4xl font-extrabold mb-6 text-brand-dark tracking-tight leading-tight">
                  Contact Us
                </h1>
-               <p className="text-lg text-slate-600 leading-relaxed max-w-4xl">
+               <p className="text-base text-slate-600 leading-relaxed max-w-4xl">
                  Connect with our engineering specialists today. Whether you're seeking a quote for a solar grid or industrial HVAC maintenance, we’re here to deliver professional-grade support.
                </p>
             </div>
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full flex-grow">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full flex-grow">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
           
           {/* Contact Details Column */}
           <div className="space-y-8">
             <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Our Locations & Access</h2>
             
             {/* Global Offices */}
-            <div className="bg-white border border-slate-100 rounded-2xl p-8 shadow-sm">
+            <div className="bg-white border border-slate-100 rounded-lg p-6 shadow-sm">
                <div className="flex items-center gap-4 mb-8">
                   <div className="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100">
                      <Globe className="w-5 h-5 text-brand-blue" />
                   </div>
                   <h3 className="text-sm font-bold text-brand-dark uppercase tracking-widest">Global Operations</h3>
                </div>
-                              <div className="grid md:grid-cols-2 gap-10">
+                              <div className="grid md:grid-cols-2 gap-7">
                   <div className="space-y-3">
                      <span className="text-[10px] font-bold text-brand-green uppercase tracking-widest">Sri Lanka HQ</span>
                      <p className="text-slate-900 font-bold text-sm leading-tight">A2Z Engineering (Pvt) Ltd</p>
@@ -83,20 +83,20 @@ export function ContactPage() {
             </div>
 
             {/* Quick Contact & Hours */}
-            <div className="grid md:grid-cols-2 gap-8">
-               <div className="bg-white border border-slate-100 rounded-2xl p-8 shadow-sm">
+            <div className="grid md:grid-cols-2 gap-6">
+               <div className="bg-white border border-slate-100 rounded-lg p-6 shadow-sm">
                   <PhoneCall className="w-5 h-5 text-brand-green mb-4" />
                   <h4 className="text-[10px] font-bold text-brand-dark uppercase tracking-widest mb-2">Phone</h4>
-                  <a href="tel:+94112995998" className="text-slate-900 font-black text-lg hover:text-brand-blue transition-colors">+94 112 995 998</a>
+                  <a href="tel:+94112995998" className="text-slate-900 font-black text-base hover:text-brand-blue transition-colors">+94 112 995 998</a>
                </div>
-               <div className="bg-white border border-slate-100 rounded-2xl p-8 shadow-sm">
+               <div className="bg-white border border-slate-100 rounded-lg p-6 shadow-sm">
                   <Mail className="w-5 h-5 text-brand-blue mb-4" />
                   <h4 className="text-[10px] font-bold text-brand-dark uppercase tracking-widest mb-2">Email</h4>
                   <a href="mailto:info@a2zengineering.lk" className="text-slate-900 font-black text-xs break-all hover:text-brand-blue transition-colors">info@a2zengineering.lk</a>
                </div>
             </div>
 
-            <div className="bg-white border border-slate-100 rounded-2xl p-8 shadow-sm">
+            <div className="bg-white border border-slate-100 rounded-lg p-6 shadow-sm">
                <div className="flex items-center gap-4 mb-6">
                   <Clock className="w-5 h-5 text-brand-dark" />
                   <h4 className="text-[10px] font-bold text-brand-dark uppercase tracking-widest">Operating Hours</h4>
@@ -119,7 +119,7 @@ export function ContactPage() {
           </div>
           
           {/* Form Column */}
-          <div className="bg-slate-50 border border-slate-100 p-8 lg:p-12 rounded-2xl shadow-sm">
+          <div className="bg-slate-50 border border-slate-100 p-6 lg:p-10 rounded-lg shadow-sm">
              <div className="inline-flex items-center gap-3 mb-6">
                <span className="w-8 h-1 bg-brand-green rounded-full"></span>
                <h2 className="text-[10px] font-bold text-brand-dark uppercase tracking-widest">Direct Inquiry</h2>
@@ -144,7 +144,7 @@ export function ContactPage() {
                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Message Content</label>
                  <textarea rows={6} className="w-full bg-white border border-slate-100 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-blue/20 transition-all outline-none resize-none"></textarea>
                </div>
-               <Button variant="primary" className="w-full h-14 bg-brand-dark hover:bg-brand-blue text-white font-bold uppercase tracking-widest text-[11px] rounded-lg mt-4 transition-all">
+               <Button variant="primary" className="w-full h-11 bg-brand-dark hover:bg-brand-blue text-white font-bold uppercase tracking-widest text-[11px] rounded-lg mt-4 transition-all">
                  Send Inquiry
                </Button>
              </form>

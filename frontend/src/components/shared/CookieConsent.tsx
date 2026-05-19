@@ -29,7 +29,7 @@ export function CookieConsent() {
 
   return (
     <div className="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-auto sm:max-w-md z-[999] animate-in slide-in-from-bottom-8 fade-in duration-500">
-      <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-xl flex flex-col gap-4 relative">
+      <div className="bg-white border border-slate-200 p-6 rounded-lg shadow-xl flex flex-col gap-4 relative">
         <button 
           onClick={handleDecline}
           className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors"

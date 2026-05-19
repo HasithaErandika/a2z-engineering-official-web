@@ -13,12 +13,12 @@ export function Home() {
       <Testimonials />
       
       {/* CTA / Newsletter */}
-      <section className="bg-brand-dark py-20 relative overflow-hidden">
+      <section className="bg-brand-dark py-16 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiAvPgo8cGF0aCBkPSJNMCAwbDh2OG0wLThMODhNMCB2OG00LTRoOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZWVlIiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8L3N2Zz4=')]"></div>
         <div className="absolute right-0 bottom-0 w-64 h-64 bg-brand-blue blur-[100px] opacity-40 rounded-full"></div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-4 tracking-tight">Join 1000+ Subscribers</h3>
-          <p className="text-brand-muted mb-10 text-lg">Stay in the loop with everything you need to know about modern engineering solutions.</p>
+          <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-4 tracking-tight">Join 1000+ Subscribers</h3>
+          <p className="text-brand-muted mb-10 text-base">Stay in the loop with everything you need to know about modern engineering solutions.</p>
           <div className="flex flex-col sm:flex-row max-w-md mx-auto gap-3">
             <input 
               type="email" 

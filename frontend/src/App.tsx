@@ -10,6 +10,7 @@ import { Home } from './pages/Home';
 import { AboutUs } from './pages/AboutUs';
 import { SolarSolutions } from './pages/SolarSolutions';
 import { Products } from './pages/Products';
+import { ProductDetails } from './pages/ProductDetails';
 import { ServicesPage } from './pages/ServicesPage';
 import { Portfolio } from './pages/Portfolio';
 import { ContactPage } from './pages/ContactPage';
@@ -33,6 +34,7 @@ function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/solar" element={<SolarSolutions />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/products/:productId" element={<ProductDetails />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/news" element={<NewsMedia />} />

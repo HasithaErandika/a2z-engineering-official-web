@@ -16,4 +16,15 @@ body {
   margin: 0;
   background-color: #ffffff;
   color: #0f172a;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
 }
