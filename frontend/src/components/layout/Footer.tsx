@@ -29,7 +29,7 @@ export function Footer() {
             <p className="mt-5 max-w-md text-sm leading-relaxed text-slate-600">
               Engineering services for solar PV, electrical systems, HVAC, and supporting infrastructure across residential and commercial projects.
             </p>
-            <Link to="/contact" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-brand-dark hover:text-brand-blue transition-colors">
+            <Link to="/contact" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-brand-dark hover:text-brand-dark transition-colors">
               Request a consultation
               <ArrowUpRight className="h-4 w-4" />
             </Link>

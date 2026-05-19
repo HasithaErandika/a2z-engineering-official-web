@@ -70,10 +70,10 @@ export function Testimonials() {
             </div>
 
             <div className="flex items-center gap-2">
-              <button onClick={() => scroll('left')} disabled={!canScrollLeft} aria-label="Previous testimonial" className="w-10 h-10 rounded-md border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-brand-blue disabled:opacity-30 disabled:hover:bg-transparent transition-all">
+              <button onClick={() => scroll('left')} disabled={!canScrollLeft} aria-label="Previous testimonial" className="w-10 h-10 rounded-md border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-brand-dark disabled:opacity-30 disabled:hover:bg-transparent transition-all">
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <button onClick={() => scroll('right')} disabled={!canScrollRight} aria-label="Next testimonial" className="w-10 h-10 rounded-md border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-brand-blue disabled:opacity-30 disabled:hover:bg-transparent transition-all">
+              <button onClick={() => scroll('right')} disabled={!canScrollRight} aria-label="Next testimonial" className="w-10 h-10 rounded-md border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-brand-dark disabled:opacity-30 disabled:hover:bg-transparent transition-all">
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
@@ -86,12 +86,12 @@ export function Testimonials() {
           
           <div ref={scrollRef} onScroll={checkScroll} className="flex overflow-x-auto gap-4 sm:gap-5 pb-10 pt-2 snap-x snap-mandatory scrollbar-hide hide-scroll-bar items-stretch" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {reviews.map((testimonial, index) => (
-              <div key={index} className={`min-w-[292px] max-w-[292px] md:min-w-[340px] md:max-w-[340px] flex-shrink-0 snap-start bg-white p-6 rounded-lg border border-slate-200 shadow-sm flex flex-col hover:border-brand-lightblue/50 hover:shadow-md transition-all ${!testimonial.content ? 'justify-center items-center text-center' : ''}`}>
+              <div key={index} className={`min-w-[292px] max-w-[292px] md:min-w-[340px] md:max-w-[340px] flex-shrink-0 snap-start bg-white p-6 rounded-lg border border-slate-200 shadow-sm flex flex-col hover:border-slate-300 hover:shadow-md transition-all ${!testimonial.content ? 'justify-center items-center text-center' : ''}`}>
                 {testimonial.content ? (
                   <>
                     <div className="flex justify-between items-start mb-5">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-sm font-bold text-brand-blue shrink-0">{testimonial.name.charAt(0)}</div>
+                        <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-sm font-bold text-brand-dark shrink-0">{testimonial.name.charAt(0)}</div>
                         <div>
                           <h4 className="font-bold text-slate-900 leading-tight text-sm">{testimonial.name}</h4>
                           <div className="flex items-center gap-1 text-amber-400 mt-1">
@@ -99,7 +99,7 @@ export function Testimonials() {
                           </div>
                         </div>
                       </div>
-                      <Quote className="w-6 h-6 text-brand-lightblue opacity-30 shrink-0" />
+                      <Quote className="w-6 h-6 text-slate-300 opacity-30 shrink-0" />
                     </div>
                     <div className="relative flex-grow">
                       <p className="text-slate-600 leading-relaxed text-sm line-clamp-6">"{testimonial.content}"</p>
@@ -107,12 +107,12 @@ export function Testimonials() {
                   </>
                 ) : (
                   <div className="flex flex-col items-center py-4">
-                    <div className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-base font-bold text-brand-blue shrink-0 mb-4">{testimonial.name.charAt(0)}</div>
+                    <div className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-base font-bold text-brand-dark shrink-0 mb-4">{testimonial.name.charAt(0)}</div>
                     <h4 className="font-bold text-slate-900 text-sm mb-2">{testimonial.name}</h4>
                     <div className="flex items-center gap-1 text-amber-400 mb-4">
                       {[...Array(testimonial.stars)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
                     </div>
-                    <span className="text-brand-blue text-[10px] font-bold uppercase tracking-widest bg-brand-lightblue/10 px-3 py-1.5 rounded-md">Verified 5-Star Rating</span>
+                    <span className="text-brand-dark text-[10px] font-bold uppercase tracking-widest bg-slate-100 px-3 py-1.5 rounded-md">Verified 5-Star Rating</span>
                   </div>
                 )}
               </div>

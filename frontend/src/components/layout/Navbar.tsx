@@ -52,7 +52,7 @@ export function Navbar() {
               +94 112 995 998
             </a>
             <Link to="/contact">
-              <Button variant="secondary" className="h-10 px-5 bg-brand-dark text-white hover:bg-brand-blue text-sm font-bold shadow-none">
+              <Button variant="secondary" className="h-10 px-5 bg-brand-dark text-white hover:bg-brand-dark text-sm font-bold shadow-none">
                 Contact
               </Button>
             </Link>
@@ -96,7 +96,7 @@ export function Navbar() {
                 Call Now
               </a>
               <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="secondary" className="h-11 w-full bg-brand-dark text-white hover:bg-brand-blue font-bold">
+                <Button variant="secondary" className="h-11 w-full bg-brand-dark text-white hover:bg-brand-dark font-bold">
                   Contact
                 </Button>
               </Link>

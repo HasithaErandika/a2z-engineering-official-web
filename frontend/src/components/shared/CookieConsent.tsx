@@ -50,7 +50,7 @@ export function CookieConsent() {
         </div>
 
         <div className="flex items-center gap-3 mt-2">
-           <Button variant="primary" onClick={handleAccept} className="w-full bg-brand-dark hover:bg-brand-blue text-white text-xs h-9">
+           <Button variant="primary" onClick={handleAccept} className="w-full bg-brand-dark hover:bg-brand-dark text-white text-xs h-9">
              Accept Cookies
            </Button>
            <Button variant="outline" onClick={handleDecline} className="w-full text-xs h-9 border-slate-200">
