@@ -13,6 +13,7 @@ export function Portfolio() {
         eyebrow="Project work"
         title="Project Portfolio"
         description="A summary of completed residential, commercial and industrial energy projects handled by A2Z Engineering."
+        bgImage="/images/facility-preview.png"
       />
 
       <section className="bg-slate-950 py-10 text-white">

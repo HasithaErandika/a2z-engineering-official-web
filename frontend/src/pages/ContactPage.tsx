@@ -9,6 +9,7 @@ export function ContactPage() {
         eyebrow="Contact"
         title="Talk to our engineering team"
         description="Send your requirement, request a site visit or contact us directly for solar, electrical, HVAC and related engineering services."
+        bgImage="/images/building-office.png"
       />
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full flex-grow">
