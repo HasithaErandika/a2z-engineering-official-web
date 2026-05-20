@@ -1,113 +1,26 @@
-import { useState } from 'react';
-import { Clock, Mail, MapPin, PhoneCall, CheckCircle } from 'lucide-react';
-import { Button } from '../components/ui/Button';
-import { PageHeader } from '../components/shared/PageHeader';
+import { PageHero } from '../components/patterns/PageHero';
+import { ContactForm } from '../components/forms/ContactForm';
+import { ContactInfoPanel } from '../components/forms/ContactInfoPanel';
+import { images } from '../data/site';
 
 export function ContactPage() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate network request
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      // Reset form success after 5 seconds
-      setTimeout(() => setIsSuccess(false), 5000);
-    }, 1200);
-  };
-
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col">
-      <PageHeader
+    <div className="min-h-screen bg-white flex flex-col">
+      <PageHero
         eyebrow="Contact"
         title="Talk to our engineering team"
-        description="Send your requirement, request a site visit or contact us directly for solar, electrical, HVAC and related engineering services."
-        bgImage="/images/building-office.png"
+        description="Solar site visits, EPC feasibility, product specifications, project consultations, and media requests — routed to the right specialists."
+        bgImage={images.buildingOffice}
       />
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full flex-grow">
-        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 items-start">
-          <div className="space-y-5">
-            <div className="bg-white border border-slate-200/80 rounded-2xl p-6 lg:p-8 shadow-sm hover:shadow-xl hover:shadow-slate-100/50 hover:-translate-y-1.5 transition-all duration-300">
-              <MapPin className="w-5 h-5 text-brand-green mb-4" />
-              <h2 className="text-base font-bold text-slate-950 mb-2">Office location</h2>
-              <a href="https://www.google.com/maps/place/A2Z+Engineering+(Pvt)+Ltd/@6.8584842,80.0869738,1139m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3ae3ad561c57f781:0xcd4de2842c93df62!8m2!3d6.8584842!4d80.0918447!16s%2Fg%2F11vr956rqf?entry=ttu&g_ep=EgoyMDI2MDQwNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" className="text-sm leading-relaxed text-slate-600 hover:text-brand-dark transition-colors">
-                158/C/1, Ingiriya Rd,<br />Meepe Junction, Padukka
-              </a>
-            </div>
+      <section className="section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-grow">
+        <div className="grid lg:grid-cols-12 gap-10 xl:gap-14 items-start">
+          <aside className="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-28">
+            <ContactInfoPanel />
+          </aside>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-5">
-              <div className="bg-white border border-slate-200/80 rounded-2xl p-6 lg:p-8 shadow-sm hover:shadow-xl hover:shadow-slate-100/50 hover:-translate-y-1.5 transition-all duration-300">
-                <PhoneCall className="w-5 h-5 text-brand-green mb-4" />
-                <h2 className="text-base font-bold text-slate-950 mb-2">Phone</h2>
-                <a href="tel:+94112995998" className="text-sm font-bold text-slate-700 hover:text-brand-dark transition-colors">+94 112 995 998</a>
-              </div>
-              <div className="bg-white border border-slate-200/80 rounded-2xl p-6 lg:p-8 shadow-sm hover:shadow-xl hover:shadow-slate-100/50 hover:-translate-y-1.5 transition-all duration-300">
-                <Mail className="w-5 h-5 text-brand-green mb-4" />
-                <h2 className="text-base font-bold text-slate-950 mb-2">Email</h2>
-                <a href="mailto:info@a2zengineering.lk" className="text-sm font-bold text-slate-700 break-all hover:text-brand-dark transition-colors">info@a2zengineering.lk</a>
-              </div>
-            </div>
-
-            <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-6 lg:p-8 shadow-sm hover:shadow-xl hover:shadow-slate-100/50 hover:-translate-y-1.5 transition-all duration-300">
-              <Clock className="w-5 h-5 text-brand-dark mb-4" />
-              <h2 className="text-base font-bold text-slate-950 mb-4">Operating hours</h2>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between gap-4"><span className="text-slate-500">Monday to Friday</span><span className="font-bold text-slate-800">08:00 AM - 05:00 PM</span></div>
-                <div className="flex justify-between gap-4"><span className="text-slate-500">Saturday</span><span className="font-bold text-slate-800">09:00 AM - 03:00 PM</span></div>
-                <div className="flex justify-between gap-4"><span className="text-slate-500">Sunday</span><span className="font-bold text-slate-400">Closed</span></div>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-slate-50 border border-slate-200/80 p-6 lg:p-10 rounded-2xl shadow-sm relative overflow-hidden">
-            {isSuccess ? (
-              <div className="absolute inset-0 bg-white flex flex-col items-center justify-center p-8 text-center animate-in fade-in zoom-in duration-300 z-10">
-                <div className="w-16 h-16 bg-brand-green/10 text-brand-green rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle className="w-8 h-8" />
-                </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-3 tracking-tight">Inquiry Received!</h3>
-                <p className="text-sm text-slate-600 leading-relaxed max-w-md">
-                  Thank you for contacting A2Z Engineering. Our technical team has received your message and will respond within 24 hours to schedule a consultation.
-                </p>
-                <Button 
-                  variant="outline" 
-                  onClick={() => setIsSuccess(false)}
-                  className="mt-8 px-8 h-10 rounded-full font-bold text-xs uppercase tracking-widest border-slate-200 text-slate-600"
-                >
-                  Send Another
-                </Button>
-              </div>
-            ) : null}
-
-            <h2 className="text-2xl font-extrabold text-slate-950 mb-3 tracking-tight">Send an inquiry</h2>
-            <p className="text-sm text-slate-600 leading-relaxed mb-8">Tell us about your project, location and preferred contact method.</p>
-            <form onSubmit={handleSubmit} className="space-y-5 relative z-0">
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-xs font-bold text-slate-600 mb-2">First name</label>
-                  <input type="text" className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-green/30" required />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-600 mb-2">Last name</label>
-                  <input type="text" className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-green/30" required />
-                </div>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-600 mb-2">Email address</label>
-                <input type="email" className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-green/30" required />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-600 mb-2">Message</label>
-                <textarea rows={6} className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-green/30 resize-none" required></textarea>
-              </div>
-              <Button type="submit" variant="primary" disabled={isSubmitting} className="w-full h-12 bg-brand-green hover:bg-brand-dark text-white font-bold rounded-lg shadow-md uppercase tracking-wider text-xs">
-                {isSubmitting ? 'Sending...' : 'Submit Technical Inquiry'}
-              </Button>
-            </form>
+          <div className="lg:col-span-7 xl:col-span-8">
+            <ContactForm />
           </div>
         </div>
       </section>

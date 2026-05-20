@@ -6,19 +6,16 @@ export function ScrollToTop() {
 
   useEffect(() => {
     if (hash) {
-      // Find element with the hash ID
-      const element = document.getElementById(hash.substring(1));
-      if (element) {
-        // Wait a brief moment for DOM rendering
-        const timer = setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-        return () => clearTimeout(timer);
-      }
-    } else {
-      // Default scroll to top if no hash
-      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+      const id = hash.replace('#', '');
+      const timer = setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+      return () => clearTimeout(timer);
     }
+    window.scrollTo(0, 0);
   }, [pathname, hash]);
 
   return null;

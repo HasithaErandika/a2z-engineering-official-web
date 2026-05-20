@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="Office building">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect x="560" y="280" width="800" height="700" fill="#334155" opacity="0.8"/>
+  <g fill="#63a3c2" opacity="0.4">
+    <rect x="600" y="340" width="80" height="100"/><rect x="720" y="340" width="80" height="100"/>
+    <rect x="840" y="340" width="80" height="100"/><rect x="960" y="340" width="80" height="100"/>
+    <rect x="1080" y="340" width="80" height="100"/><rect x="1200" y="340" width="80" height="100"/>
+  </g>
+</svg>

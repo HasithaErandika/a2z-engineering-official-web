@@ -1,20 +1,20 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { 
-  Zap, 
-  Wind, 
-  Radio, 
-  Wrench, 
-  CheckCircle2, 
+import {
+  Zap,
+  Wind,
+  Radio,
+  Wrench,
+  CheckCircle2,
   ArrowRight,
-  Info,
-  Calendar,
-  Layers
 } from 'lucide-react';
-import { PageHeader } from '../components/shared/PageHeader';
+import { PageHero } from '../components/patterns/PageHero';
+import { CTABand } from '../components/patterns/CTABand';
+import { Card } from '../components/ui/Card';
+import { Disclosure } from '../components/ui/Disclosure';
+import { ButtonLink } from '../components/ui/ButtonLink';
+import { images } from '../data/site';
 
 export function ServicesPage() {
-  const navigate = useNavigate();
   const [selectedServiceSpec, setSelectedServiceSpec] = useState<string | null>(null);
 
   const serviceCategories = [
@@ -121,21 +121,22 @@ export function ServicesPage() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col">
-      <PageHeader
+      <PageHero
         eyebrow="Services"
-        title="Engineering Services with Clear Scope"
+        title="Engineering services with clear scope"
         description="We keep each project practical: understand the site, define the technical requirement, install carefully, and support the system after handover."
-        bgImage="/images/facility-preview.png"
+        bgImage={images.facilityPreview}
       />
 
       {/* Services Grid Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full flex-grow">
         <div className="grid md:grid-cols-2 gap-8">
           {serviceCategories.map((category) => (
-            <article 
-              key={category.id} 
+            <Card
+              key={category.id}
               id={category.id}
-              className={`bg-white border border-slate-200/80 p-6 lg:p-8 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between ${category.glowColor}`}
+              interactive
+              className={`scroll-target p-6 lg:p-8 flex flex-col justify-between ${category.glowColor}`}
             >
               <div className="space-y-4">
                 
@@ -165,56 +166,55 @@ export function ServicesPage() {
 
               </div>
 
-              {/* Action spec buttons */}
-              <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
-                <button
-                  onClick={() => setSelectedServiceSpec(selectedServiceSpec === category.id ? null : category.id)}
-                  className="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-400 hover:text-brand-blue uppercase tracking-wider outline-none"
+              <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between gap-4 flex-wrap">
+                <Disclosure
+                  id={`spec-${category.id}`}
+                  title={
+                    selectedServiceSpec === category.id
+                      ? 'Hide specifications'
+                      : 'View engineering specs'
+                  }
+                  open={selectedServiceSpec === category.id}
+                  onToggle={() =>
+                    setSelectedServiceSpec(
+                      selectedServiceSpec === category.id ? null : category.id
+                    )
+                  }
+                  className="flex-1 min-w-[200px]"
                 >
-                  <Info className="w-3.5 h-3.5" />
-                  <span>
-                    {selectedServiceSpec === category.id ? 'Hide Specifications' : 'View Engineering Specs'}
-                  </span>
-                </button>
+                  <div className="grid gap-2 text-slate-700">
+                    <p>
+                      <span className="font-bold text-slate-400 uppercase text-xs block">
+                        Tolerance
+                      </span>
+                      {category.specs.tolerances}
+                    </p>
+                    <p>
+                      <span className="font-bold text-slate-400 uppercase text-xs block">
+                        Standards
+                      </span>
+                      {category.specs.standards}
+                    </p>
+                    <p>
+                      <span className="font-bold text-slate-400 uppercase text-xs block">
+                        Hardware
+                      </span>
+                      {category.specs.hardware}
+                    </p>
+                    <p>
+                      <span className="font-bold text-slate-400 uppercase text-xs block">
+                        Structural
+                      </span>
+                      {category.specs.windLoad}
+                    </p>
+                  </div>
+                </Disclosure>
 
-                <button
-                  onClick={() => navigate('/contact')}
-                  className="inline-flex items-center gap-1 text-[10px] font-bold text-brand-dark hover:text-brand-blue uppercase tracking-widest outline-none group-hover:translate-x-0.5 transition-transform"
-                >
-                  <span>Inquire</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                <ButtonLink to="/contact?inquiry=services-epc" variant="outline" size="sm" className="gap-1 shrink-0">
+                  Inquire <ArrowRight className="w-3.5 h-3.5" aria-hidden />
+                </ButtonLink>
               </div>
-
-              {/* Expandable Engineering Spec Sheet Block */}
-              {selectedServiceSpec === category.id && (
-                <div className="mt-4 p-4 bg-slate-50 border border-slate-200/50 rounded-lg text-xs space-y-2.5 animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="flex items-center gap-1.5 text-brand-blue font-bold uppercase tracking-wider text-[9px] border-b border-slate-100 pb-1.5">
-                    <Layers className="w-3.5 h-3.5" />
-                    <span>Technical Parameters Summary</span>
-                  </div>
-                  <div className="grid gap-2">
-                    <div>
-                      <span className="text-slate-400 block text-[8px] font-bold uppercase tracking-wider">Calibration Tolerance</span>
-                      <span className="font-semibold text-slate-700">{category.specs.tolerances}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[8px] font-bold uppercase tracking-wider">Design Standards</span>
-                      <span className="font-semibold text-slate-700">{category.specs.standards}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[8px] font-bold uppercase tracking-wider">Hardware Integration Profile</span>
-                      <span className="font-semibold text-slate-700">{category.specs.hardware}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[8px] font-bold uppercase tracking-wider">Structural Compliance</span>
-                      <span className="font-semibold text-brand-green">{category.specs.windLoad}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-            </article>
+            </Card>
           ))}
         </div>
       </section>
@@ -270,29 +270,13 @@ export function ServicesPage() {
         </div>
       </section>
 
-      {/* CTA Survey Request */}
-      <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <div className="inline-flex items-center gap-1.5 text-[10px] font-bold text-brand-green uppercase tracking-widest bg-brand-green/5 border border-brand-green/10 px-3.5 py-1.5 rounded-full mx-auto">
-            <Calendar className="w-3.5 h-3.5" /> Book Feasibility Study
-          </div>
-          
-          <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight leading-none">
-            Ready to Plan Your Technical Integration?
-          </h3>
-          <p className="text-slate-600 leading-relaxed text-xs max-w-2xl mx-auto italic">
-            "Every project starts with the site condition, structural weights, load requirements, and customer budget. Contact A2Z Engineering today to consult with our registered structural and electrical engineers."
-          </p>
-          <div className="pt-2">
-            <button
-              onClick={() => navigate('/contact')}
-              className="inline-flex items-center gap-2 bg-[#1e293b] hover:bg-brand-blue text-white text-[10px] font-bold uppercase tracking-widest px-8 py-3.5 rounded-lg shadow-sm hover:shadow-md transition-all outline-none"
-            >
-              Consult an Specialist <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </section>
+      <CTABand
+        variant="light"
+        title="Ready to plan your technical integration?"
+        description="Every project starts with site conditions, structural requirements, and budget. Consult our registered structural and electrical engineers."
+        primaryLabel="Book feasibility study"
+        primaryTo="/contact?inquiry=services-epc"
+      />
 
     </div>
   );

@@ -1,23 +1,20 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { 
-  ArrowRight, 
-  CheckCircle2, 
-  Sun, 
-  TrendingDown, 
-  ShieldCheck, 
-  Calculator, 
-  Info, 
-  Battery, 
-  Cpu, 
+import {
+  CheckCircle2,
+  Sun,
+  TrendingDown,
+  ShieldCheck,
+  Calculator,
+  Info,
+  Battery,
   Network,
-  TableProperties
+  TableProperties,
 } from 'lucide-react';
-import { PageHeader } from '../components/shared/PageHeader';
+import { PageHero } from '../components/patterns/PageHero';
+import { CTABand } from '../components/patterns/CTABand';
+import { images } from '../data/site';
 
 export function SolarSolutions() {
-  const navigate = useNavigate();
-
   // 1. Calculator State Parameters
   const [monthlyBill, setMonthlyBill] = useState<number>(45000);
   const [viewTariffTable, setViewTariffTable] = useState<boolean>(false);
@@ -157,11 +154,11 @@ export function SolarSolutions() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col">
-      <PageHeader
+      <PageHero
         eyebrow="Solar PV Systems"
-        title="Engineering High-Yield Solar Solutions"
-        description="We evaluate your specific rooftop surface, active load cycles, and local substation conditions before deploying certified Net-Accounting or BESS Hybrid storage networks."
-        bgImage="/images/hero-solar.png"
+        title="Engineering high-yield solar solutions"
+        description="We evaluate your rooftop surface, active load cycles, and local substation conditions before deploying certified Net-Accounting or BESS hybrid storage networks."
+        bgImage={images.heroSolar}
       />
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-16 flex-grow">
@@ -241,7 +238,7 @@ export function SolarSolutions() {
                   step="1000" 
                   value={monthlyBill} 
                   onChange={(e) => setMonthlyBill(Number(e.target.value))}
-                  className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#4E9F3D] my-3"
+                  className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-green my-3"
                 />
                 <div className="flex justify-between text-[9px] font-bold text-slate-400 uppercase tracking-widest font-mono">
                   <span>Rs. 1,000</span>
@@ -282,7 +279,7 @@ export function SolarSolutions() {
                   </div>
                   <div className="space-y-1">
                     <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">Required Roof Area</span>
-                    <p className="text-2xl font-black text-[#4E9F3D]">{requiredArea} <span className="text-xs font-bold text-slate-400">Sq.Ft.</span></p>
+                    <p className="text-2xl font-black text-brand-green">{requiredArea} <span className="text-xs font-bold text-slate-400">Sq.Ft.</span></p>
                   </div>
                   <div className="space-y-1">
                     <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">CEB Export Buyback Rate</span>
@@ -294,7 +291,7 @@ export function SolarSolutions() {
                   </div>
                   <div className="space-y-1">
                     <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">Capital Payback Period</span>
-                    <p className="text-2xl font-black text-[#4E9F3D]">{paybackPeriod} <span className="text-xs font-bold text-slate-400">Years</span></p>
+                    <p className="text-2xl font-black text-brand-green">{paybackPeriod} <span className="text-xs font-bold text-slate-400">Years</span></p>
                   </div>
                 </div>
               </div>
@@ -306,11 +303,11 @@ export function SolarSolutions() {
                 </div>
                 <div className="flex justify-between items-baseline">
                   <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Estimated 25-Year Net Earnings</span>
-                  <span className="text-lg font-black text-[#4E9F3D]">Rs. {lifetimeSavings.toLocaleString()}</span>
+                  <span className="text-lg font-black text-brand-green">Rs. {lifetimeSavings.toLocaleString()}</span>
                 </div>
               </div>
 
-              <div className="p-3.5 bg-slate-50 border border-slate-150 rounded-lg flex items-start gap-2.5 text-[10px] text-slate-500 leading-relaxed select-none">
+              <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-lg flex items-start gap-2.5 text-[10px] text-slate-500 leading-relaxed select-none">
                 <Info className="w-4 h-4 text-brand-green shrink-0 mt-0.5" />
                 <p>
                   *Sizing is dynamically calculated to match 100% of your energy consumption under standard meteorological conditions in Sri Lanka. Buyback calculations apply CEB Net-Accounting tariff slabs.
@@ -323,7 +320,7 @@ export function SolarSolutions() {
 
           {/* Collapsible Tariff Guide Tables (User provided parameters) */}
           {viewTariffTable && (
-            <div className="mt-8 pt-8 border-t border-slate-200 animate-in fade-in slide-in-from-top-2 duration-300 space-y-6">
+            <div className="mt-8 pt-8 border-t border-slate-200 animate-slide-up space-y-6">
               
               <div className="grid md:grid-cols-2 gap-8">
                 
@@ -341,12 +338,12 @@ export function SolarSolutions() {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-slate-100 font-medium text-slate-600">
-                        <tr><td className="px-3 py-2">0 – 5 kW</td><td className="px-3 py-2 text-right font-mono font-bold text-[#4E9F3D]">LKR 20.90</td></tr>
-                        <tr><td className="px-3 py-2">5 – 20 kW</td><td className="px-3 py-2 text-right font-mono font-bold text-[#4E9F3D]">LKR 19.61</td></tr>
-                        <tr><td className="px-3 py-2">20 – 100 kW</td><td className="px-3 py-2 text-right font-mono font-bold text-[#4E9F3D]">LKR 17.46</td></tr>
-                        <tr><td className="px-3 py-2">100 – 500 kW</td><td className="px-3 py-2 text-right font-mono font-bold text-[#4E9F3D]">LKR 15.49</td></tr>
-                        <tr><td className="px-3 py-2">500 kW – 1 MW</td><td className="px-3 py-2 text-right font-mono font-bold text-[#4E9F3D]">LKR 15.07</td></tr>
-                        <tr><td className="px-3 py-2">1 MW+</td><td className="px-3 py-2 text-right font-mono font-bold text-[#4E9F3D]">LKR 14.46</td></tr>
+                        <tr><td className="px-3 py-2">0 – 5 kW</td><td className="px-3 py-2 text-right font-mono font-bold text-brand-green">LKR 20.90</td></tr>
+                        <tr><td className="px-3 py-2">5 – 20 kW</td><td className="px-3 py-2 text-right font-mono font-bold text-brand-green">LKR 19.61</td></tr>
+                        <tr><td className="px-3 py-2">20 – 100 kW</td><td className="px-3 py-2 text-right font-mono font-bold text-brand-green">LKR 17.46</td></tr>
+                        <tr><td className="px-3 py-2">100 – 500 kW</td><td className="px-3 py-2 text-right font-mono font-bold text-brand-green">LKR 15.49</td></tr>
+                        <tr><td className="px-3 py-2">500 kW – 1 MW</td><td className="px-3 py-2 text-right font-mono font-bold text-brand-green">LKR 15.07</td></tr>
+                        <tr><td className="px-3 py-2">1 MW+</td><td className="px-3 py-2 text-right font-mono font-bold text-brand-green">LKR 14.46</td></tr>
                       </tbody>
                     </table>
                   </div>
@@ -408,9 +405,9 @@ export function SolarSolutions() {
 
         {/* Section 4: Grid Connection Interconnection Timeline */}
         <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-12 items-center">
-          <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-slate-150 shadow-md">
+          <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 shadow-md">
             <img 
-              src="/images/solar-panel-product.png" 
+              src={images.solarPanelProduct} 
               alt="A2Z Engineering Certified Panel Array" 
               className="w-full h-full object-cover" 
             />
@@ -444,28 +441,14 @@ export function SolarSolutions() {
           </div>
         </div>
 
-        {/* Section 5: Survey Consultation CTA Box */}
-        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-8 lg:p-12 text-center space-y-6">
-          <div className="inline-flex items-center gap-1.5 text-[9px] font-bold text-brand-blue uppercase tracking-widest bg-brand-blue/5 border border-brand-blue/10 px-3.5 py-1.5 rounded-full mx-auto">
-            <Cpu className="w-3.5 h-3.5" /> Turnkey Sourcing EPC
-          </div>
-          <h3 className="text-2xl font-extrabold text-slate-950 tracking-tight leading-none">
-            Planning a Solar PV Installation?
-          </h3>
-          <p className="text-xs leading-relaxed text-slate-600 max-w-2xl mx-auto">
-            Share your location, transformer capacity, and average electricity usage. A2Z Engineering will recommend the optimal turnkey scheme (Net-Metering, Net-Accounting, or BESS Hybrid Backup) with detailed cost projections.
-          </p>
-          <div className="pt-2">
-            <button 
-              onClick={() => navigate('/contact')} 
-              className="inline-flex items-center gap-2 rounded-lg bg-[#4E9F3D] hover:bg-brand-dark px-7 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-md hover:shadow-lg transition-all outline-none"
-            >
-              Request Site Visit <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
       </section>
+
+      <CTABand
+        title="Planning a solar PV installation?"
+        description="Share your location, transformer capacity, and average electricity usage. We will recommend the optimal scheme with detailed cost projections."
+        primaryLabel="Request site visit"
+        primaryTo="/contact?inquiry=solar-site-visit"
+      />
     </div>
   );
 }
