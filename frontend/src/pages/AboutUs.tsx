@@ -90,20 +90,20 @@ export function AboutUs() {
 
             {/* Core Pillars */}
             <div className="grid sm:grid-cols-2 gap-4 pt-2">
-              <div className="border border-slate-100 bg-slate-50/50 p-4 rounded-lg flex gap-3">
+              <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex gap-4">
                 <ShieldCheck className="w-5 h-5 text-brand-green shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-brand-dark uppercase tracking-wider">Turnkey Mission</h4>
-                  <p className="text-[11px] text-slate-500 leading-relaxed mt-1">
+                  <h4 className="text-xs font-black text-brand-dark uppercase tracking-wider">Turnkey Mission</h4>
+                  <p className="text-[11px] text-slate-500 leading-relaxed mt-1.5">
                     Deliver robust mechanical designs and complete grid integration clearances.
                   </p>
                 </div>
               </div>
-              <div className="border border-slate-100 bg-slate-50/50 p-4 rounded-lg flex gap-3">
+              <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex gap-4">
                 <CheckCircle2 className="w-5 h-5 text-brand-blue shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-brand-dark uppercase tracking-wider">Corporate Vision</h4>
-                  <p className="text-[11px] text-slate-500 leading-relaxed mt-1">
+                  <h4 className="text-xs font-black text-brand-dark uppercase tracking-wider">Corporate Vision</h4>
+                  <p className="text-[11px] text-slate-500 leading-relaxed mt-1.5">
                     Operate as a lifelong compliance service partner for green commercial transitions.
                   </p>
                 </div>
@@ -172,7 +172,7 @@ export function AboutUs() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-5">
-            <div className="bg-white border border-slate-200/60 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow flex items-start gap-4">
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:shadow-slate-100/50 hover:-translate-y-1.5 transition-all duration-300 flex items-center gap-5">
               <div className="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100 shrink-0">
                 <User className="w-5 h-5 text-brand-green" />
               </div>
@@ -182,7 +182,7 @@ export function AboutUs() {
               </div>
             </div>
             
-            <div className="bg-white border border-slate-200/60 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow flex items-start gap-4">
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:shadow-slate-100/50 hover:-translate-y-1.5 transition-all duration-300 flex items-center gap-5">
               <div className="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100 shrink-0">
                 <User className="w-5 h-5 text-brand-blue" />
               </div>

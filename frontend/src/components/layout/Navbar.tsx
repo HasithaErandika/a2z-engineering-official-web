@@ -47,7 +47,7 @@ export function Navbar() {
           </div>
 
           <div className="hidden lg:flex items-center gap-3">
-            <a href="tel:+94112995998" className="hidden xl:inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-brand-dark transition-colors">
+            <a href="tel:+94112995998" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-brand-dark transition-colors">
               <PhoneCall className="h-4 w-4 text-brand-green" />
               +94 112 995 998
             </a>

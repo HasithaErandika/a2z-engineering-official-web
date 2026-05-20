@@ -4,6 +4,7 @@ import { LoadingScreen } from './components/shared/LoadingScreen';
 import { CookieConsent } from './components/shared/CookieConsent';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
+import { ScrollToTop } from './components/shared/ScrollToTop';
 
 // Pages
 import { Home } from './pages/Home';
@@ -23,10 +24,12 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
       
       <div className="min-h-screen bg-white text-slate-900 font-sans flex flex-col pt-20">
         <Navbar />
+
         
         <main className="flex-grow">
           <Routes>

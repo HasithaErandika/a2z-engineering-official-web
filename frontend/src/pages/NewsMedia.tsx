@@ -56,7 +56,7 @@ export function NewsMedia() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full flex-grow space-y-16">
         
         {/* 1. Featured Spotlight Article (Splits to 2 Columns) */}
-        <article className="border border-slate-150 rounded-2xl overflow-hidden shadow-sm bg-white group hover:border-brand-blue/25 hover:shadow transition-all">
+        <article className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-slate-100/50 hover:-translate-y-1.5 transition-all duration-300 group hover:border-brand-blue/30">
           <div className="grid lg:grid-cols-12">
             
             {/* Spotlight Image Container */}
@@ -125,7 +125,7 @@ export function NewsMedia() {
             {otherArticles.map((article) => (
               <article 
                 key={article.id} 
-                className="border border-slate-150 rounded-xl overflow-hidden bg-white hover:border-brand-green/35 hover:shadow-sm transition-all group flex flex-col justify-between"
+                className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-slate-100/50 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between hover:border-brand-green/35"
               >
                 
                 {/* Thumbnail Image */}

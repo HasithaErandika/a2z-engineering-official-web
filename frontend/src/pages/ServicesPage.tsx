@@ -134,7 +134,8 @@ export function ServicesPage() {
           {serviceCategories.map((category) => (
             <article 
               key={category.id} 
-              className={`bg-white border border-slate-150 p-6 lg:p-8 rounded-xl shadow-sm hover:shadow-md transition-all group flex flex-col justify-between ${category.glowColor}`}
+              id={category.id}
+              className={`bg-white border border-slate-200/80 p-6 lg:p-8 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between ${category.glowColor}`}
             >
               <div className="space-y-4">
                 
@@ -239,7 +240,7 @@ export function ServicesPage() {
             {workflowSteps.map((step, i) => (
               <div 
                 key={step.title} 
-                className="bg-white border border-slate-200/80 rounded-xl p-6 shadow-sm flex flex-col justify-between relative group hover:border-brand-blue/20 hover:shadow transition-all"
+                className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm flex flex-col justify-between relative group hover:border-brand-blue/30 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300"
               >
                 
                 {/* Large floating number index */}

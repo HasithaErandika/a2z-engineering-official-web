@@ -2,9 +2,9 @@ import { PageHeader } from '../components/shared/PageHeader';
 
 export function Portfolio() {
   const projects = [
-    { title: 'Factory solar installation', location: 'Nuriya Road, Deraniyagala', capacity: '80 kW', impact: 'Commercial solar installation supporting daily factory energy demand.' },
-    { title: 'Commercial building solar', location: 'Hospital Junction, Polonnaruwa', capacity: '100 kW', impact: 'Grid-connected solar system built to reduce long-term electricity cost.' },
-    { title: 'Residential grid-tied project', location: 'Narahenpita Road, Nawala', capacity: '40 kW', impact: 'Rooftop solar installation designed for reliable grid-tied production.' }
+    { title: '80kW Industrial Net-Accounting Array', location: 'Nuriya Road, Deraniyagala', capacity: '80 kW', impact: 'Optimizes daily operations by delivering 80 kW of clean, self-generated industrial power, reducing reliance on grid energy.' },
+    { title: '100kW Commercial Rooftop PV', location: 'Hospital Junction, Polonnaruwa', capacity: '100 kW', impact: 'Engineered a high-capacity 100 kW grid-connected net-metered system to offset peak commercial demand cycles.' },
+    { title: '40kW Premium Residential Grid-Tied', location: 'Narahenpita Road, Nawala', capacity: '40 kW', impact: 'Deploys a robust 40 kW rooftop solar array, maximizing long-term energy yield for high-load residential consumers.' }
   ];
 
   return (
@@ -28,15 +28,21 @@ export function Portfolio() {
         <h2 className="text-2xl font-extrabold text-slate-950 mb-8 tracking-tight">Selected projects</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {projects.map((proj, i) => (
-            <article key={proj.location} className="bg-white border border-slate-200 rounded-lg overflow-hidden">
+            <article key={proj.location} className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-slate-100/50 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between">
               <div className="aspect-[4/3] overflow-hidden bg-slate-50">
-                <img src={i === 0 ? '/images/facility-preview.png' : i === 1 ? '/images/building-office.png' : '/images/solar-panel-product.png'} alt={proj.title} className="w-full h-full object-cover" />
+                <img src={i === 0 ? '/images/facility-preview.png' : i === 1 ? '/images/building-office.png' : '/images/solar-panel-product.png'} alt={proj.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
-              <div className="p-6">
-                <p className="text-xs font-bold text-brand-green uppercase tracking-widest mb-3">{proj.capacity}</p>
-                <h3 className="text-lg font-bold text-slate-950 mb-2">{proj.location}</h3>
-                <p className="text-sm font-medium text-brand-dark mb-3">{proj.title}</p>
-                <p className="text-sm leading-relaxed text-slate-600">{proj.impact}</p>
+              <div className="p-6 lg:p-8 flex-grow flex flex-col justify-between">
+                <div>
+                  <p className="text-[10px] font-black text-brand-green uppercase tracking-widest mb-3 bg-brand-green/10 border border-brand-green/20 px-3 py-1 inline-block rounded-full">{proj.capacity}</p>
+                  <h3 className="text-xl font-black text-slate-950 mb-2 tracking-tight">{proj.location}</h3>
+                  <p className="text-sm font-bold text-slate-800 mb-4">{proj.title}</p>
+                  <p className="text-xs leading-relaxed text-slate-600 mb-6">{proj.impact}</p>
+                </div>
+                <div className="pt-4 border-t border-slate-100 flex items-center gap-1 text-[10px] font-bold text-brand-blue uppercase tracking-widest group-hover:translate-x-0.5 transition-transform cursor-pointer">
+                  <span>View Details</span>
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </div>
               </div>
             </article>
           ))}

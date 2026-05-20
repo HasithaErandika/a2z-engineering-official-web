@@ -28,3 +28,110 @@ body {
     transform: translateX(100%);
   }
 }
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+/* Live SVG Flow Animations */
+@keyframes svg-flow {
+  from {
+    stroke-dashoffset: 40;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes node-glow-green {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+    filter: drop-shadow(0 0 2px rgba(118, 167, 84, 0.4));
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(118, 167, 84, 0.9));
+  }
+}
+
+@keyframes node-glow-blue {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+    filter: drop-shadow(0 0 2px rgba(89, 134, 177, 0.4));
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(89, 134, 177, 0.9));
+  }
+}
+
+@keyframes node-glow-dark {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+    filter: drop-shadow(0 0 2px rgba(82, 95, 150, 0.4));
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(82, 95, 150, 0.9));
+  }
+}
+
+@keyframes card-glow {
+  0%, 100% {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  }
+  50% {
+    box-shadow: 0 20px 30px -5px rgba(118, 167, 84, 0.1), 0 12px 16px -6px rgba(89, 134, 177, 0.1);
+  }
+}
+
+.flow-line {
+  stroke-dasharray: 8, 8;
+  animation: svg-flow 2s linear infinite;
+}
+
+.flow-line-two {
+  stroke-dasharray: 6, 6;
+  animation: svg-flow 1.5s linear infinite reverse;
+}
+
+.flow-line-three {
+  stroke-dasharray: 10, 5;
+  animation: svg-flow 3s linear infinite;
+}
+
+.flow-node {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: node-glow-green 2s ease-in-out infinite;
+}
+
+.node-two {
+  animation-name: node-glow-blue;
+  animation-delay: 0.6s;
+}
+
+.node-three {
+  animation-name: node-glow-dark;
+  animation-delay: 1.2s;
+}
+
+.live-dashboard-card {
+  animation: card-glow 6s ease-in-out infinite;
+}
+

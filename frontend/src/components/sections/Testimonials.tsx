@@ -86,7 +86,7 @@ export function Testimonials() {
           
           <div ref={scrollRef} onScroll={checkScroll} className="flex overflow-x-auto gap-4 sm:gap-5 pb-10 pt-2 snap-x snap-mandatory scrollbar-hide hide-scroll-bar items-stretch" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {reviews.map((testimonial, index) => (
-              <div key={index} className={`min-w-[292px] max-w-[292px] md:min-w-[340px] md:max-w-[340px] flex-shrink-0 snap-start bg-white p-6 rounded-lg border border-slate-200 shadow-sm flex flex-col hover:border-slate-300 hover:shadow-md transition-all ${!testimonial.content ? 'justify-center items-center text-center' : ''}`}>
+              <div key={index} className={`min-w-[292px] max-w-[292px] md:min-w-[340px] md:max-w-[340px] flex-shrink-0 snap-start bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col hover:shadow-xl hover:shadow-slate-100/50 hover:-translate-y-1.5 transition-all duration-300 ${!testimonial.content ? 'justify-center items-center text-center' : ''}`}>
                 {testimonial.content ? (
                   <>
                     <div className="flex justify-between items-start mb-5">

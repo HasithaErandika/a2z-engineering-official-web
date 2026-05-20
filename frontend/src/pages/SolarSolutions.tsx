@@ -176,7 +176,7 @@ export function SolarSolutions() {
             {systems.map((system) => (
               <article 
                 key={system.title} 
-                className="border border-slate-150 rounded-xl p-6 bg-white hover:border-brand-green/35 shadow-sm hover:shadow-md transition-all group flex flex-col justify-between"
+                className="bg-white border border-slate-200/80 rounded-2xl p-6 lg:p-8 hover:border-brand-green/35 shadow-sm hover:shadow-xl hover:shadow-slate-100/50 hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between"
               >
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
@@ -396,8 +396,8 @@ export function SolarSolutions() {
         {/* Section 3: Engineering Sizing Benefits */}
         <div className="grid md:grid-cols-3 gap-6">
           {benefits.map((benefit) => (
-            <div key={benefit.title} className="bg-white border border-slate-150 hover:border-slate-300 rounded-xl p-6 transition-all shadow-sm">
-              <div className="w-10 h-10 bg-slate-50 border border-slate-100 rounded-lg flex items-center justify-center mb-4">
+            <div key={benefit.title} className="bg-white border border-slate-200/80 hover:border-slate-300 rounded-2xl p-6 lg:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group">
+              <div className="w-10 h-10 bg-slate-50 border border-slate-100 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 {benefit.icon}
               </div>
               <h3 className="text-sm font-extrabold text-slate-950 mb-2">{benefit.title}</h3>
