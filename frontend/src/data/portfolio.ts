@@ -1,5 +1,3 @@
-import { images } from './site';
-
 export interface PortfolioProject {
   id: string;
   title: string;
@@ -17,7 +15,7 @@ export const portfolioProjects: PortfolioProject[] = [
     capacity: '80 kW',
     impact:
       'Optimizes daily operations by delivering 80 kW of clean, self-generated industrial power, reducing reliance on grid energy.',
-    image: images.facilityPreview,
+    image: 'images/solar-panel-product.png',
   },
   {
     id: 'polonnaruwa-100kw',
@@ -26,7 +24,7 @@ export const portfolioProjects: PortfolioProject[] = [
     capacity: '100 kW',
     impact:
       'Engineered a high-capacity 100 kW grid-connected net-metered system to offset peak commercial demand cycles.',
-    image: images.buildingOffice,
+    image: 'images/solar-panel-product.png',
   },
   {
     id: 'nawala-40kw',
@@ -35,6 +33,6 @@ export const portfolioProjects: PortfolioProject[] = [
     capacity: '40 kW',
     impact:
       'Deploys a robust 40 kW rooftop solar array, maximizing long-term energy yield for high-load residential consumers.',
-    image: images.solarPanelProduct,
+    image: 'images/solar-panel-product.png',
   },
 ];
