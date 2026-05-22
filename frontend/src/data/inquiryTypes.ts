@@ -96,11 +96,29 @@ export const inquiryTypeMap = Object.fromEntries(
 ) as Record<string, InquiryType>;
 
 export const preferredContactMethods = [
-  { value: 'phone', label: 'Phone call' },
-  { value: 'email', label: 'Email' },
-  { value: 'whatsapp', label: 'WhatsApp' },
-  { value: 'any', label: 'No preference' },
+  {
+    value: 'email',
+    label: 'Email',
+    description: 'We reply to your email address',
+  },
+  {
+    value: 'whatsapp',
+    label: 'WhatsApp',
+    description: 'We message you on WhatsApp',
+  },
+  {
+    value: 'phone',
+    label: 'Phone call',
+    description: 'We call your mobile number',
+  },
+  {
+    value: 'other',
+    label: 'Other',
+    description: 'Specify another channel below',
+  },
 ] as const;
+
+export type PreferredContactMethod = (typeof preferredContactMethods)[number]['value'];
 
 export const projectSectors = [
   { value: '', label: 'Select sector (optional)' },

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { CheckCircle, Send } from 'lucide-react';
+import { CheckCircle, Send, AlertCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Textarea } from '../ui/Textarea';
@@ -10,7 +10,10 @@ import {
   inquiryTypeMap,
   preferredContactMethods,
   projectSectors,
+  type PreferredContactMethod,
 } from '../../data/inquiryTypes';
+import { site } from '../../data/site';
+import { submitInquiry, mailtoInquiryFallback, type ContactFormPayload } from '../../lib/submitInquiry';
 import { cn } from '../../lib/cn';
 
 const DEFAULT_INQUIRY = 'solar-site-visit';
@@ -26,8 +29,11 @@ export function ContactForm() {
   const [inquiryId, setInquiryId] = useState<string>(() =>
     isValidInquiryId(paramInquiry) ? paramInquiry : DEFAULT_INQUIRY
   );
+  const [contactMethod, setContactMethod] = useState<PreferredContactMethod>('email');
+  const [contactMethodOther, setContactMethodOther] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const activeType = inquiryTypeMap[inquiryId] ?? inquiryTypeMap[DEFAULT_INQUIRY];
 
@@ -42,14 +48,55 @@ export function ContactForm() {
     setSearchParams({ inquiry: id }, { replace: true });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(null);
+
+    if (contactMethod === 'other' && !contactMethodOther.trim()) {
+      setError('Please specify how you would like us to contact you.');
+      return;
+    }
+
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+
+    const payload: ContactFormPayload = {
+      inquiryId,
+      firstName: String(fd.get('firstName') ?? '').trim(),
+      lastName: String(fd.get('lastName') ?? '').trim(),
+      email: String(fd.get('email') ?? '').trim(),
+      phone: String(fd.get('phone') ?? '').trim(),
+      organization: String(fd.get('organization') ?? '').trim() || undefined,
+      sector: String(fd.get('sector') ?? '').trim() || undefined,
+      location: String(fd.get('location') ?? '').trim(),
+      message: String(fd.get('message') ?? '').trim(),
+      contactMethod,
+      contactMethodOther: contactMethod === 'other' ? contactMethodOther.trim() : undefined,
+    };
+
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+
+    try {
+      await submitInquiry(payload);
       setIsSuccess(true);
-      setTimeout(() => setIsSuccess(false), 6000);
-    }, 1200);
+      form.reset();
+      setContactMethod('email');
+      setContactMethodOther('');
+      setTimeout(() => setIsSuccess(false), 8000);
+    } catch {
+      try {
+        mailtoInquiryFallback(payload);
+        setError(
+          'Automatic send could not complete. Your email app should open — send the message to reach our team.'
+        );
+      } catch {
+        setError(
+          `Could not send automatically. Please email ${site.inquiryRecipients.join(' and ')} directly.`
+        );
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const sectorOptions = useMemo(
@@ -73,12 +120,15 @@ export function ContactForm() {
             <CheckCircle className="w-8 h-8" aria-hidden />
           </div>
           <h3 className="text-2xl font-extrabold text-slate-900 mb-2 tracking-tight">
-            Inquiry received
+            Inquiry sent
           </h3>
           <p className="text-sm text-slate-600 leading-relaxed max-w-sm mb-1">
-            Thank you, <strong>{activeType.shortLabel}</strong> request logged.
+            Your <strong>{activeType.shortLabel}</strong> request was emailed to our engineering
+            team.
           </p>
-          <p className="text-xs text-slate-500 max-w-sm">{activeType.responseNote}</p>
+          <p className="text-xs text-slate-500 max-w-sm">
+            Delivered to {site.email} and {site.emailCc}. {activeType.responseNote}
+          </p>
           <Button variant="outline" onClick={() => setIsSuccess(false)} className="mt-8">
             Submit another inquiry
           </Button>
@@ -93,13 +143,14 @@ export function ContactForm() {
           Tell us what you need
         </h2>
         <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-          Choose your inquiry type, then share project details. All fields marked with * are
-          required.
+          Submissions are sent to{' '}
+          <span className="font-semibold text-slate-800">{site.email}</span> and{' '}
+          <span className="font-semibold text-slate-800">{site.emailCc}</span>. Choose how you
+          prefer us to reply.
         </p>
       </div>
 
       <div className="p-6 lg:p-8 space-y-8">
-        {/* Inquiry type selector */}
         <fieldset>
           <legend className="text-xs font-bold text-slate-600 uppercase tracking-wider mb-3">
             Type of inquiry *
@@ -187,13 +238,14 @@ export function ContactForm() {
                   autoComplete="email"
                 />
                 <Input
-                  label="Phone *"
+                  label="Phone / WhatsApp number *"
                   name="phone"
                   id="phone"
                   type="tel"
                   required
                   autoComplete="tel"
-                  placeholder="+94 7X XXX XXXX"
+                  placeholder="+94 77 XXX XXXX"
+                  hint="Include country code for WhatsApp replies"
                 />
               </div>
               <Input
@@ -218,13 +270,12 @@ export function ContactForm() {
                   name="location"
                   id="location"
                   required
-                  placeholder="e.g. Colombo, Gampaha, Kandy"
+                  placeholder="e.g. Colombo, Gampaha, Padukka"
                   autoComplete="address-level2"
                 />
               </div>
-              <input type="hidden" name="inquiryType" value={inquiryId} />
               <Textarea
-                label="Project details *"
+                label="Your message *"
                 name="message"
                 id="message"
                 required
@@ -235,25 +286,70 @@ export function ContactForm() {
             </div>
           </div>
 
-          <div className="border-t border-slate-100 pt-6">
-            <Select
-              label="Preferred contact method"
-              name="contactMethod"
-              id="contact-method"
-              defaultValue="any"
-            >
-              {preferredContactMethods.map((m) => (
-                <option key={m.value} value={m.value}>
-                  {m.label}
-                </option>
-              ))}
-            </Select>
+          <div className="border-t border-slate-100 pt-6 space-y-4">
+            <fieldset>
+              <legend className="text-xs font-bold text-slate-600 uppercase tracking-wider mb-3">
+                How should we reply to you? *
+              </legend>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5" role="radiogroup">
+                {preferredContactMethods.map((method) => {
+                  const selected = contactMethod === method.value;
+                  return (
+                    <label
+                      key={method.value}
+                      className={cn(
+                        'flex flex-col gap-1 p-3.5 rounded-[var(--radius-md)] border cursor-pointer transition-all min-h-[44px]',
+                        selected
+                          ? 'border-brand-blue bg-brand-blue/5'
+                          : 'border-slate-200 hover:border-slate-300 bg-white'
+                      )}
+                    >
+                      <span className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="contactMethod"
+                          value={method.value}
+                          checked={selected}
+                          onChange={() => setContactMethod(method.value)}
+                          className="accent-brand-green"
+                          required
+                        />
+                        <span className="text-sm font-bold text-slate-900">{method.label}</span>
+                      </span>
+                      <span className="text-xs text-slate-500 pl-6">{method.description}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </fieldset>
+
+            {contactMethod === 'other' && (
+              <Input
+                label="Specify contact channel *"
+                name="contactMethodOther"
+                id="contact-method-other"
+                value={contactMethodOther}
+                onChange={(e) => setContactMethodOther(e.target.value)}
+                placeholder="e.g. Microsoft Teams, site visit only, SMS"
+                required
+              />
+            )}
           </div>
+
+          {error && (
+            <div
+              className="flex gap-3 p-4 rounded-[var(--radius-md)] border border-amber-200 bg-amber-50 text-sm text-amber-900"
+              role="alert"
+            >
+              <AlertCircle className="w-5 h-5 shrink-0" aria-hidden />
+              <p>{error}</p>
+            </div>
+          )}
 
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
             <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
-              By submitting, you agree we may contact you about this inquiry. We do not share your
-              details with third parties.
+              By submitting, you agree we may contact you about this inquiry. Messages are sent to{' '}
+              {site.inquiryRecipients.join(' and ')}.
             </p>
             <Button
               type="submit"
@@ -263,10 +359,10 @@ export function ContactForm() {
               disabled={isSubmitting}
             >
               {isSubmitting ? (
-                'Sending…'
+                'Sending to team…'
               ) : (
                 <>
-                  Submit inquiry
+                  Submit inquiry by email
                   <Send className="w-4 h-4" aria-hidden />
                 </>
               )}

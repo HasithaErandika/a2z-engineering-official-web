@@ -4,7 +4,11 @@ export const site = {
   tagline: 'Engineering services for solar PV, electrical systems, HVAC, and supporting infrastructure.',
   phone: '+94 112 995 998',
   phoneHref: 'tel:+94112995998',
+  whatsapp: '+94 77 149 9544',
+  whatsappHref: 'https://wa.me/94771499544',
   email: 'info@a2zengineering.lk',
+  emailCc: 'indika@a2zengineering.lk',
+  inquiryRecipients: ['info@a2zengineering.lk', 'indika@a2zengineering.lk'] as const,
   address: {
     line1: '158/C/1, Ingiriya Rd,',
     line2: 'Meepe Junction, Padukka',

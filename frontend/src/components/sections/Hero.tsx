@@ -1,7 +1,6 @@
 import { ArrowUpRight, Play } from 'lucide-react';
 import { companyStats } from '../../data/site';
 import { ButtonLink } from '../ui/ButtonLink';
-import { Card } from '../ui/Card';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 export function Hero() {
@@ -234,15 +233,20 @@ export function Hero() {
                   </svg>
                 </div>
               </div>
-              {/* Floating Experience Badge */}
-              <Card className="absolute -top-6 -left-2 sm:-left-6 z-20 w-36 p-4 bg-white/95 backdrop-blur-md interactive shadow-[var(--shadow-card-hover)] border-slate-200/80">
-                <p className="text-2xl font-extrabold text-brand-dark leading-none">
-                  {companyStats.yearsExperience}
-                </p>
-                <p className="text-[9px] font-bold uppercase tracking-wider text-slate-500 mt-2 leading-none">
-                  Years of trust
-                </p>
-              </Card>
+              {/* 15+ Years — bottom-right of animated diagram */}
+              <div
+                className="absolute -bottom-5 -right-2 sm:-right-5 sm:-bottom-6 z-30 pointer-events-none"
+                aria-label={`${companyStats.yearsExperience} years of trust`}
+              >
+                <div className="rounded-2xl border-2 border-brand-green/30 bg-white px-5 py-4 shadow-xl shadow-slate-900/10 backdrop-blur-sm">
+                  <p className="text-3xl sm:text-4xl font-extrabold text-brand-green leading-none tabular-nums">
+                    {companyStats.yearsExperience}
+                  </p>
+                  <p className="text-xs font-bold uppercase tracking-[0.15em] text-slate-700 mt-2 whitespace-nowrap">
+                    Years of trust
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

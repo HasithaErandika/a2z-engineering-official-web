@@ -1,4 +1,4 @@
-import { Clock, Mail, MapPin, Navigation, PhoneCall, ExternalLink } from 'lucide-react';
+import { Clock, Mail, MapPin, MessageCircle, Navigation, PhoneCall, ExternalLink } from 'lucide-react';
 import { site } from '../../data/site';
 import { cn } from '../../lib/cn';
 
@@ -52,6 +52,26 @@ export function ContactInfoPanel() {
 
       {/* Direct contact actions */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-4">
+        <a
+          href={site.whatsappHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(
+            'group flex items-center gap-4 p-5 rounded-[var(--radius-lg)] border border-emerald-200 bg-emerald-50/50',
+            'hover:border-emerald-300 hover:shadow-[var(--shadow-card-hover)] transition-all duration-200',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500'
+          )}
+        >
+          <div className="w-11 h-11 rounded-full bg-emerald-500/15 flex items-center justify-center shrink-0 group-hover:bg-emerald-500/20 transition-colors">
+            <MessageCircle className="w-5 h-5 text-emerald-600" aria-hidden />
+          </div>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-emerald-700">WhatsApp</p>
+            <p className="text-base font-extrabold text-slate-950 tracking-tight">{site.whatsapp}</p>
+            <p className="text-xs text-emerald-700/80 mt-0.5">Chat with our desk</p>
+          </div>
+        </a>
+
         <a
           href={site.phoneHref}
           className={cn(
