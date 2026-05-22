@@ -1,5 +1,3 @@
-import { images } from './site';
-
 export interface NewsArticle {
   id: string;
   title: string;
@@ -20,7 +18,7 @@ export const newsArticles: NewsArticle[] = [
     readTime: '3 min read',
     excerpt:
       'The newly deployed official web platform gives clients a streamlined gateway to review our engineering catalog, Tier-1 products database, and EPC portfolios.',
-    image: images.facilityPreview,
+    image: '/images/web.png',
     category: 'Company update',
     categoryVariant: 'blue',
     featured: true,
@@ -32,7 +30,7 @@ export const newsArticles: NewsArticle[] = [
     readTime: '4 min read',
     excerpt:
       'A2Z crews continue grid integrations across manufacturing plants, focusing on Net-Accounting schemes with high-yield PV modules.',
-    image: images.solarPanelProduct,
+    image: '/images/Industrial_roof.png',
     category: 'Project update',
     categoryVariant: 'green',
   },
@@ -43,7 +41,7 @@ export const newsArticles: NewsArticle[] = [
     readTime: '5 min read',
     excerpt:
       'Regular inspection and thermal scan audits ensure industrial solar arrays, HVAC systems, and distribution panels run safely over decades.',
-    image: images.buildingOffice,
+    image: '/images/Maintanance.png',
     category: 'Service note',
     categoryVariant: 'neutral',
   },

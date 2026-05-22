@@ -407,7 +407,7 @@ export function SolarSolutions() {
         <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-12 items-center">
           <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-slate-200 shadow-md">
             <img 
-              src={images.solarPanelProduct} 
+              src="/images/solar.png" 
               alt="A2Z Engineering Certified Panel Array" 
               className="w-full h-full object-cover" 
             />

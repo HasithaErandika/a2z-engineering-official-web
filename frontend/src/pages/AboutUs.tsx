@@ -1,4 +1,4 @@
-import { ArrowRight, ShieldCheck, CheckCircle2, User } from 'lucide-react';
+import { ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { PageHero } from '../components/patterns/PageHero';
 import { CTABand } from '../components/patterns/CTABand';
 import { Card } from '../components/ui/Card';
@@ -21,7 +21,7 @@ export function AboutUs() {
           <div className="lg:col-span-5">
             <Card className="overflow-hidden">
               <img
-                src={images.facilityPreview}
+                src="/images/solar_array.png"
                 alt="A2Z Engineering operations"
                 className="w-full aspect-[4/3] object-cover"
                 loading="lazy"
@@ -49,7 +49,7 @@ export function AboutUs() {
             />
 
             <p className="text-sm text-slate-600 leading-relaxed">
-              Every deployment—from high-yield solar arrays to heavy-load ventilation networks—is designed
+              Every deployment from high-yield solar arrays to heavy-load ventilation networks is designed
               with verified load evaluations and wind-compliance structures.
             </p>
 
@@ -101,23 +101,27 @@ export function AboutUs() {
             className="mb-10"
           />
           <div className="grid md:grid-cols-2 gap-5">
-            <Card interactive className="p-6 flex items-center gap-5">
-              <div className="w-10 h-10 bg-slate-50 rounded-[var(--radius-md)] flex items-center justify-center border border-slate-100 shrink-0">
-                <User className="w-5 h-5 text-brand-green" aria-hidden />
-              </div>
+            <Card interactive className="p-6 flex items-center gap-6">
+              <img
+                src="/images/indika.png"
+                alt="Indika Wickramasinghe"
+                className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border border-slate-100 shadow-sm shrink-0"
+              />
               <div>
-                <h4 className="text-sm font-bold text-slate-900">Indika Wickramasinghe</h4>
+                <h4 className="text-base font-bold text-slate-900">Indika Wickramasinghe</h4>
                 <span className="text-xs font-bold uppercase tracking-wider text-brand-dark block mt-1">
                   Director operations
                 </span>
               </div>
             </Card>
-            <Card interactive className="p-6 flex items-center gap-5">
-              <div className="w-10 h-10 bg-slate-50 rounded-[var(--radius-md)] flex items-center justify-center border border-slate-100 shrink-0">
-                <User className="w-5 h-5 text-brand-blue" aria-hidden />
-              </div>
+            <Card interactive className="p-6 flex items-center gap-6">
+              <img
+                src="/images/dhammika.png"
+                alt="Dhammika Chandrasiri"
+                className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border border-slate-100 shadow-sm shrink-0"
+              />
               <div>
-                <h4 className="text-sm font-bold text-slate-900">Dhammika Chandrasiri</h4>
+                <h4 className="text-base font-bold text-slate-900">Dhammika Chandrasiri</h4>
                 <span className="text-xs font-bold uppercase tracking-wider text-brand-dark block mt-1">
                   Director CFO
                 </span>

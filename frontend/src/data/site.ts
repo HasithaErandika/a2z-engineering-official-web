@@ -27,11 +27,11 @@ export const companyStats = {
 
 /** Central image paths — replace SVG placeholders with production WebP/PNG when ready */
 export const images = {
-  heroSolar: '/images/hero-solar.svg',
-  buildingOffice: '/images/building-office.svg',
-  facilityPreview: '/images/facility-preview.svg',
-  solarPanelProduct: '/images/solar-panel-product.svg',
-  inverterProduct: '/images/inverter-product.svg',
+  heroSolar: '/images/hero-solar.png',
+  buildingOffice: '/images/building-office.png',
+  facilityPreview: '/images/facility-preview.png',
+  solarPanelProduct: '/images/solar-panel-product.png',
+  inverterProduct: '/images/inverter-product.png',
 } as const;
 
 export const navLinks = [

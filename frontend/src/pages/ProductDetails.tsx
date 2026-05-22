@@ -9,19 +9,12 @@ import {
   CalendarCheck,
 } from 'lucide-react';
 import { productDetailsMap, productsList } from '../data/productDetails';
-import { images } from '../data/site';
 import { PageHero } from '../components/patterns/PageHero';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { ButtonLink } from '../components/ui/ButtonLink';
 
-function DetailVisual({ type, title }: { type: string; title: string }) {
-  const image =
-    type === 'Panels'
-      ? images.solarPanelProduct
-      : type === 'Batteries'
-        ? images.facilityPreview
-        : images.inverterProduct;
+function DetailVisual({ image, title }: { image: string; title: string }) {
   return (
     <div className="w-full aspect-[4/3] rounded-[var(--radius-lg)] overflow-hidden border border-slate-200 shadow-[var(--shadow-card)] bg-slate-50">
       <img
@@ -57,12 +50,7 @@ export function ProductDetails() {
     );
   }
 
-  const headerBgImage =
-    productMeta.type === 'Panels'
-      ? images.solarPanelProduct
-      : productMeta.type === 'Batteries'
-        ? images.facilityPreview
-        : images.inverterProduct;
+  const headerBgImage = productMeta.image;
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -86,7 +74,7 @@ export function ProductDetails() {
       <section className="section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-grow">
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-5 space-y-6">
-            <DetailVisual type={productMeta.type} title={productMeta.title} />
+            <DetailVisual image={productMeta.image} title={productMeta.title} />
 
             <Card variant="muted" className="p-6 space-y-4">
               <div className="flex items-center gap-2 border-b border-slate-200 pb-3">

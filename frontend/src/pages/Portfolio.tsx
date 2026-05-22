@@ -38,8 +38,11 @@ export function Portfolio() {
             const isExpanded = expandedId === proj.id;
             return (
               <article key={proj.id}>
-                <Card interactive className="overflow-hidden flex flex-col h-full">
-                  <div className="aspect-[4/3] overflow-hidden bg-slate-50">
+                <Card
+                  interactive
+                  className="overflow-hidden flex flex-col h-full perfect-shadow border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-blue/40"
+                >
+                  <div className="aspect-[4/3] overflow-hidden bg-slate-50 relative">
                     <img
                       src={proj.image}
                       alt={proj.title}

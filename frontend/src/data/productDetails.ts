@@ -12,6 +12,7 @@ export interface ProductItem {
   title: string;
   brand: string;
   type: string;
+  image: string;
 }
 
 export const productDetailsMap: Record<string, ProductDetails> = {
@@ -193,16 +194,16 @@ export const productDetailsMap: Record<string, ProductDetails> = {
 };
 
 export const productsList: ProductItem[] = [
-  { id: "jinko-panels", title: "Jinko Solar N-Type & Bifacial Panels", brand: "Jinko Solar Co., Ltd", type: "Panels" },
-  { id: "ja-solar-panels", title: "JA Solar Monocrystalline Modules", brand: "Shanghai JA Solar Technologies", type: "Panels" },
-  { id: "longi-panels", title: "Longi Solar Hi-MO 5 & Hi-MO 7 Series", brand: "Longi Solar Technology Co, Ltd", type: "Panels" },
-  { id: "solis-inverters", title: "Solis Smart On-Grid Inverters", brand: "Solis - Ningbo Ginlong Technologies", type: "Inverters" },
-  { id: "goodwe-inverters", title: "GoodWe Residential & Commercial String Inverters", brand: "Jiangsu GoodWe Power Supply", type: "Inverters" },
-  { id: "huawei-inverters", title: "Huawei SUN2000 Smart Energy Inverters", brand: "Huawei Technologies Co., Ltd.", type: "Inverters" },
-  { id: "solax-inverters", title: "SolaX Power High-Efficiency Grid Inverters", brand: "SolaX Power Network Technology", type: "Inverters" },
-  { id: "solis-hybrids", title: "Solis S5 & S6 Intelligent Hybrid Inverters", brand: "Solis - Ningbo Ginlong Technologies", type: "Hybrids" },
-  { id: "huawei-batteries", title: "Huawei LUNA2000 Smart Battery Systems", brand: "Huawei Technologies Co., Ltd.", type: "Batteries" },
-  { id: "goodwe-batteries", title: "GoodWe Lynx Home Low & High Voltage Storage", brand: "GoodWe Batteries", type: "Batteries" },
-  { id: "solis-batteries", title: "Solis IntelliHome Smart Batteries", brand: "Solis Batteries", type: "Batteries" },
-  { id: "industrial-stacks", title: "Industrial Storage Stack 100 & High Capacity", brand: "Multi-Brand Stack Systems", type: "Batteries" }
+  { id: "jinko-panels", title: "Jinko Solar N-Type & Bifacial Panels", brand: "Jinko Solar Co., Ltd", type: "Panels", image: "/products/Jinko_tiger.png" },
+  { id: "ja-solar-panels", title: "JA Solar Monocrystalline Modules", brand: "Shanghai JA Solar Technologies", type: "Panels", image: "/products/JA_Solar_panels.png" },
+  { id: "longi-panels", title: "Longi Solar Hi-MO 5 & Hi-MO 7 Series", brand: "Longi Solar Technology Co, Ltd", type: "Panels", image: "/products/Longi_panels.png" },
+  { id: "solis-inverters", title: "Solis Smart On-Grid Inverters", brand: "Solis - Ningbo Ginlong Technologies", type: "Inverters", image: "/products/Solis_OnGrid.png" },
+  { id: "goodwe-inverters", title: "GoodWe Residential & Commercial String Inverters", brand: "Jiangsu GoodWe Power Supply", type: "Inverters", image: "/products/Goodwe_ResidentialandCommercial.png" },
+  { id: "huawei-inverters", title: "Huawei SUN2000 Smart Energy Inverters", brand: "Huawei Technologies Co., Ltd.", type: "Inverters", image: "/products/Huawie_2000.png" },
+  { id: "solax-inverters", title: "SolaX Power High-Efficiency Grid Inverters", brand: "SolaX Power Network Technology", type: "Inverters", image: "/products/Solax.png" },
+  { id: "solis-hybrids", title: "Solis S5 & S6 Intelligent Hybrid Inverters", brand: "Solis - Ningbo Ginlong Technologies", type: "Hybrids", image: "/products/Solis S5 S6 Hybrid.png" },
+  { id: "huawei-batteries", title: "Huawei LUNA2000 Smart Battery Systems", brand: "Huawei Technologies Co., Ltd.", type: "Batteries", image: "/products/huawei-luna.png" },
+  { id: "goodwe-batteries", title: "GoodWe Lynx Home Low & High Voltage Storage", brand: "GoodWe Batteries", type: "Batteries", image: "/products/GoodWe_Lynx.png" },
+  { id: "solis-batteries", title: "Solis IntelliHome Smart Batteries", brand: "Solis Batteries", type: "Batteries", image: "/products/Solis_InttelliHome.png" },
+  { id: "industrial-stacks", title: "Industrial Storage Stack 100 & High Capacity", brand: "Multi-Brand Stack Systems", type: "Batteries", image: "/products/Stack100.png" }
 ];

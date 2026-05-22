@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, ArrowRight, Globe, ShieldCheck, BadgeHelp } from 'lucide-react';
+import { Search, ArrowRight, Globe, ShieldCheck, BadgeHelp, Star } from 'lucide-react';
+
+
 import { PageHero } from '../components/patterns/PageHero';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
@@ -8,8 +10,7 @@ import { Button } from '../components/ui/Button';
 import { productsList, productDetailsMap } from '../data/productDetails';
 import { images } from '../data/site';
 
-function ProductVisual({ type, title }: { type: string; title: string }) {
-  const image = type === 'Panels' ? images.solarPanelProduct : images.inverterProduct;
+function ProductVisual({ image, title }: { image: string; title: string }) {
   return (
     <div className="w-full h-full relative overflow-hidden bg-slate-50">
       <img
@@ -96,13 +97,24 @@ export function Products() {
             {filteredProducts.map((item) => {
               const details = productDetailsMap[item.id];
               return (
-                <Card key={item.id} interactive className="overflow-hidden flex flex-col group">
+                <Card
+                  key={item.id}
+                  interactive
+                  className="overflow-hidden flex flex-col perfect-shadow border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-blue/40 group"
+                >
                   <div className="aspect-[16/10] bg-slate-50 overflow-hidden relative">
-                    <ProductVisual type={item.type} title={item.title} />
+                    <ProductVisual image={item.image} title={item.title} />
                     {details && (
-                      <span className="absolute top-4 left-4 z-20 inline-flex items-center gap-1 bg-white/95 border border-slate-100 rounded-full px-2.5 py-1 text-xs font-bold uppercase text-slate-500 shadow-sm">
-                        <Globe className="w-3 h-3 text-brand-blue" aria-hidden /> {details.country}
-                      </span>
+                      <>
+                        <span className="absolute top-4 left-4 z-20 inline-flex items-center gap-1 bg-white/95 border border-slate-100 rounded-full px-2.5 py-1 text-xs font-bold uppercase text-slate-500 shadow-sm">
+                          <Globe className="w-3 h-3 text-brand-blue" aria-hidden /> {details.country}
+                        </span>
+                        {(item.id === 'jinko-panels' || item.id === 'solis-inverters' || item.id === 'solis-batteries' || item.id === 'solis-hybrids') && (
+                          <Badge variant="default" className="absolute top-4 left-24 z-20 bg-orange-500 text-white hover:bg-orange-600 flex items-center px-2 py-0.5 text-xs">
+                            <Star className="w-3 h-3 mr-1" aria-hidden />Top Selling
+                          </Badge>
+                        )}
+                      </>
                     )}
                     <Badge variant="accent" className="absolute bottom-4 right-4 z-20">
                       {item.type}
@@ -115,6 +127,7 @@ export function Products() {
                         {item.brand}
                       </span>
                       <h3 className="text-base font-extrabold text-slate-900 tracking-tight">{item.title}</h3>
+
                       {details && (
                         <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">
                           {details.description}

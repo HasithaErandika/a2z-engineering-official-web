@@ -83,7 +83,6 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
         }}
         className="mt-6 text-xs font-semibold text-slate-500 hover:text-brand-dark underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue rounded-sm px-2 min-h-[44px]"
       >
-        Skip
       </button>
     </div>
   );

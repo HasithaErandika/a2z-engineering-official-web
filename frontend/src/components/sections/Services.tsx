@@ -14,7 +14,7 @@ const iconStyles = [
 
 export function Services() {
   return (
-    <section id="services" className="section bg-slate-50/80 border-y border-slate-100">
+    <section id="services" className="section bg-slate-50/50 border-y border-slate-100/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Our expertise"
@@ -22,16 +22,19 @@ export function Services() {
           description="We keep the scope clear from the first site visit to handover, so customers understand what is being installed, why it is needed, and how it will be maintained."
         />
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-8 mt-12">
           {homeServices.map((service, i) => {
             const Icon = icons[i];
             return (
               <Link key={service.title} to={service.href} className="group block scroll-target">
                 <Card
                   interactive
-                  className={cn('h-full p-8 flex flex-col justify-between', service.borderHover)}
+                  className={cn(
+                    'h-full p-8 flex flex-col justify-between service-card perfect-shadow border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1',
+                    service.borderHover
+                  )}
                 >
-                  <div className="space-y-6">
+                  <div className="space-y-6 relative z-10">
                     <div
                       className={cn(
                         'w-12 h-12 rounded-[var(--radius-md)] flex items-center justify-center border',
@@ -41,15 +44,15 @@ export function Services() {
                       <Icon className="w-6 h-6" aria-hidden />
                     </div>
                     <div className="space-y-3">
-                      <h3 className="text-lg font-bold text-slate-950 tracking-tight group-hover:text-brand-dark transition-colors">
+                      <h3 className="text-lg font-extrabold text-slate-950 tracking-tight group-hover:text-brand-green transition-colors">
                         {service.title}
                       </h3>
                       <p className="text-slate-600 leading-relaxed text-sm">{service.description}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-slate-400 group-hover:text-brand-dark uppercase tracking-wider pt-6 mt-6 border-t border-slate-100">
+                  <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 group-hover:text-brand-green uppercase tracking-widest pt-6 mt-6 border-t border-slate-100 relative z-10">
                     <span>Explore solutions</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" aria-hidden />
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" aria-hidden />
                   </div>
                 </Card>
               </Link>

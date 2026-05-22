@@ -22,7 +22,10 @@ export function NewsMedia() {
       />
 
       <section className="section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-grow space-y-12">
-        <Card interactive className="overflow-hidden">
+        <Card
+          interactive
+          className="overflow-hidden perfect-shadow border-slate-200 bg-white transition-all duration-300 hover:border-brand-green/45"
+        >
           <div className="grid lg:grid-cols-12">
             <div className="lg:col-span-7 aspect-[16/10] lg:aspect-auto overflow-hidden bg-slate-50 relative min-h-[280px]">
               <img
@@ -72,7 +75,11 @@ export function NewsMedia() {
           <SectionHeader title="Recent announcements" className="mb-6" />
           <div className="grid md:grid-cols-2 gap-6">
             {otherArticles.map((article) => (
-              <Card key={article.id} interactive className="overflow-hidden flex flex-col">
+              <Card
+                key={article.id}
+                interactive
+                className="overflow-hidden flex flex-col perfect-shadow border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-green/40"
+              >
                 <div className="aspect-[16/9] overflow-hidden bg-slate-50 relative">
                   <img
                     src={article.image}
