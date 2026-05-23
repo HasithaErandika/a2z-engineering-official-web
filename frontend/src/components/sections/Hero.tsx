@@ -2,6 +2,7 @@ import { ArrowUpRight, Play } from 'lucide-react';
 import { companyStats } from '../../data/site';
 import { ButtonLink } from '../ui/ButtonLink';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { AnimatedStat } from '../ui/AnimatedStat';
 
 export function Hero() {
   const reducedMotion = useReducedMotion();
@@ -9,7 +10,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full min-h-[85vh] flex items-center overflow-hidden bg-white px-4 py-16 sm:py-24 border-b border-slate-100"
+      className="relative w-full min-h-[85vh] flex items-center overflow-hidden bg-gradient-to-b from-white via-white to-slate-50/90 px-4 py-16 sm:py-24 border-b border-slate-200/60"
     >
       {/* Premium Radial Grid Background Mesh */}
       <div className="absolute inset-0 pointer-events-none hero-grid animate-fade-in" />
@@ -51,30 +52,24 @@ export function Hero() {
 
             {/* Premium horizontal stats block (from ShipYourDraft signals design) */}
             <div className="mt-8 grid w-full max-w-xl grid-cols-3 gap-3">
-              <div className="rounded-2xl border border-slate-200/70 bg-white/75 p-4 text-left shadow-sm shadow-slate-200/40 backdrop-blur">
-                <p className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-                  {companyStats.installedCapacityKw} kW
-                </p>
-                <p className="mt-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-500 leading-none">
-                  Solar Capacity
-                </p>
-              </div>
-              <div className="rounded-2xl border border-slate-200/70 bg-white/75 p-4 text-left shadow-sm shadow-slate-200/40 backdrop-blur">
-                <p className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-                  {companyStats.projectsCompleted}
-                </p>
-                <p className="mt-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-500 leading-none">
-                  Projects done
-                </p>
-              </div>
-              <div className="rounded-2xl border border-slate-200/70 bg-white/75 p-4 text-left shadow-sm shadow-slate-200/40 backdrop-blur">
-                <p className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-                  {companyStats.connectedInfrastructure}
-                </p>
-                <p className="mt-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-500 leading-none">
-                  Infrastructure
-                </p>
-              </div>
+              <AnimatedStat
+                end={parseFloat(companyStats.installedCapacityKw.replace(/,/g, ''))}
+                decimals={2}
+                label="Solar Capacity"
+                formatValue={(n) =>
+                  `${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kW`
+                }
+              />
+              <AnimatedStat
+                end={parseInt(companyStats.projectsCompleted, 10)}
+                label="Projects done"
+              />
+              <AnimatedStat
+                end={parseFloat(companyStats.connectedInfrastructure.replace(/[^\d.]/g, ''))}
+                decimals={2}
+                label="Infrastructure"
+                formatValue={(n) => `${n.toFixed(2)} MW+`}
+              />
             </div>
           </div>
 

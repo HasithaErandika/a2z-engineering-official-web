@@ -14,7 +14,10 @@ const iconStyles = [
 
 export function Services() {
   return (
-    <section id="services" className="section bg-slate-50/50 border-y border-slate-100/80">
+    <section
+      id="services"
+      className="section bg-gradient-to-b from-[#eef4fb] via-white to-[#f4f8ef] border-y border-brand-blue/10"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Our expertise"

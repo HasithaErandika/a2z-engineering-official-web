@@ -4,7 +4,10 @@ export interface ProductDetails {
   advantage: string;
   manufacturerName: string;
   country: string;
+  /** Product catalog or series page for this line */
   officialUrl: string;
+  /** Corporate / manufacturer homepage */
+  manufacturerUrl: string;
 }
 
 export interface ProductItem {
@@ -13,13 +16,26 @@ export interface ProductItem {
   brand: string;
   type: string;
   image: string;
+  topSelling?: boolean;
+}
+
+/** Display order: top-selling lines first, then remainder of catalog */
+export function sortProductsTopSellingFirst(products: ProductItem[]): ProductItem[] {
+  const catalogOrder = new Map(productsList.map((p, i) => [p.id, i]));
+  return [...products].sort((a, b) => {
+    const aTop = a.topSelling ? 0 : 1;
+    const bTop = b.topSelling ? 0 : 1;
+    if (aTop !== bTop) return aTop - bTop;
+    return (catalogOrder.get(a.id) ?? 0) - (catalogOrder.get(b.id) ?? 0);
+  });
 }
 
 export const productDetailsMap: Record<string, ProductDetails> = {
   "jinko-panels": {
     manufacturerName: "Jinko Solar Co., Ltd",
     country: "China",
-    officialUrl: "https://www.jinkosolar.com/",
+    officialUrl: "https://www.jinkosolar.com/en/site/new_energy/products",
+    manufacturerUrl: "https://www.jinkosolar.com/",
     description: "Jinko Solar N-type and Bifacial modules represent the pinnacle of high-efficiency silicon solar cells. Deployed heavily by A2Z in utility and commercial projects, these modules provide unmatched temperature coefficients and zero light-induced degradation (LID).",
     advantage: "Tier-1 bankability, high bifaciality factors, outstanding performance under high humidity and heat, 25-year linear performance warranty.",
     models: [
@@ -32,7 +48,8 @@ export const productDetailsMap: Record<string, ProductDetails> = {
   "ja-solar-panels": {
     manufacturerName: "Shanghai JA Solar Technologies Co., Ltd / JA Solar International Limited",
     country: "China",
-    officialUrl: "https://www.jasolar.com/",
+    officialUrl: "https://www.jasolar.com/html/en/products/",
+    manufacturerUrl: "https://www.jasolar.com/",
     description: "JA Solar multi-busbar (MBB) half-cell modules are engineered to minimize resistance power loss while increasing mechanical loading capabilities. Highly recommended by our engineering division for coastal and industrial environments.",
     advantage: "High power output, excellent low irradiance performance, lower thermal coefficient for Sri Lankan weather.",
     models: [
@@ -44,7 +61,8 @@ export const productDetailsMap: Record<string, ProductDetails> = {
   "longi-panels": {
     manufacturerName: "Longi Solar Technology Co, Ltd",
     country: "China",
-    officialUrl: "https://www.longi.com/",
+    officialUrl: "https://www.longi.com/en/solar/products/pv-modules",
+    manufacturerUrl: "https://www.longi.com/en/solar",
     description: "Longi Solar's flagship Hi-MO monocrystalline modules utilize advanced smart soldering and gallium-doped silicon wafers to deliver maximum reliability and energy conversion efficiency over long product lifetimes.",
     advantage: "Industry-leading cost-efficiency, superior wind/snow loading capacities, high energy yield under harsh utility conditions.",
     models: [
@@ -60,7 +78,8 @@ export const productDetailsMap: Record<string, ProductDetails> = {
   "solis-inverters": {
     manufacturerName: "Solis - Ningbo Ginlong Technologies Co., Ltd",
     country: "China",
-    officialUrl: "https://www.ginlong.com/",
+    officialUrl: "https://www.solisinverters.com/on-grid-inverters",
+    manufacturerUrl: "https://www.ginlong.com/",
     description: "Solis string grid-tied inverters are highly stable, commercial-grade components designed to feed pure AC power directly to high-capacity industrial, commercial, and residential operations with robust protective architectures.",
     advantage: "High power density, wider MPPT operating voltage ranges, multiple smart protective shields (integrated AFCI/SPDs).",
     models: [
@@ -78,7 +97,8 @@ export const productDetailsMap: Record<string, ProductDetails> = {
   "goodwe-inverters": {
     manufacturerName: "Jiangsu GoodWe Power Supply Technology Co., Ltd",
     country: "China",
-    officialUrl: "https://www.goodwe.com/",
+    officialUrl: "https://www.goodwe.com/PV-Inverters",
+    manufacturerUrl: "https://www.goodwe.com/",
     description: "GoodWe's residential and commercial string inverters deliver leading thermodynamic convective cooling and highly precise MPPT tracking algorithms, maximizing solar yield from large multi-angle commercial array layouts.",
     advantage: "Integrated DC reverse polarity protection, low start-up voltage, high-efficiency passive thermal cooling.",
     models: [
@@ -95,7 +115,8 @@ export const productDetailsMap: Record<string, ProductDetails> = {
   "huawei-inverters": {
     manufacturerName: "Huawei Technologies Co., Ltd.",
     country: "China",
-    officialUrl: "https://solar.huawei.com/",
+    officialUrl: "https://solar.huawei.com/en/products/inverters",
+    manufacturerUrl: "https://solar.huawei.com/",
     description: "Huawei smart grid-tied string inverters incorporate AI-boosted arc protection (AFCI) and integrated optimizer management layouts, yielding up to 30% more energy from shaded roof areas.",
     advantage: "Built-in PID recovery, AI-powered active protection to prevent fire hazards, highly secure digital cloud telemetry.",
     models: [
@@ -111,7 +132,8 @@ export const productDetailsMap: Record<string, ProductDetails> = {
   "solax-inverters": {
     manufacturerName: "SolaX Power Network Technology Co., Ltd.",
     country: "China",
-    officialUrl: "https://www.solaxpower.com/",
+    officialUrl: "https://www.solaxpower.com/products.html",
+    manufacturerUrl: "https://www.solaxpower.com/",
     description: "SolaX Power string inverters offer incredible conversion ratios and lightweight engineering form factors. They represent high-efficiency options for single-phase residential and large commercial utility projects.",
     advantage: "Compact and fanless low-noise designs, high DC input oversized capability, seamless grid-integration certification.",
     models: [
@@ -127,7 +149,8 @@ export const productDetailsMap: Record<string, ProductDetails> = {
   "solis-hybrids": {
     manufacturerName: "Solis - Ningbo Ginlong Technologies Co., Ltd",
     country: "China",
-    officialUrl: "https://www.ginlong.com/",
+    officialUrl: "https://www.solisinverters.com/hybrid-inverters",
+    manufacturerUrl: "https://www.ginlong.com/",
     description: "Solis Smart Hybrid energy managers combine solar PV input, energy storage charging circuits, and double-insulated back-up power outputs into one modular chassis, delivering secure power safety through outages.",
     advantage: "Single and Three-Phase options, compatible with multiple LFP battery systems, zero export features, <10ms emergency switchover.",
     models: [
@@ -143,7 +166,8 @@ export const productDetailsMap: Record<string, ProductDetails> = {
   "huawei-batteries": {
     manufacturerName: "Huawei Technologies Co., Ltd.",
     country: "China",
-    officialUrl: "https://solar.huawei.com/",
+    officialUrl: "https://solar.huawei.com/en/products/luna2000",
+    manufacturerUrl: "https://solar.huawei.com/",
     description: "Huawei LUNA2000 energy storage systems are premium modular smart Lithium Iron Phosphate (LiFePO4) batteries equipped with individual energy optimizers, allowing independent charge and discharge on a modular level.",
     advantage: "100% depth of discharge capability, modular stackable construction from 5kWh to 30kWh, integrated fire safety suppression.",
     models: [
@@ -154,7 +178,8 @@ export const productDetailsMap: Record<string, ProductDetails> = {
   "goodwe-batteries": {
     manufacturerName: "Jiangsu GoodWe Power Supply Technology Co., Ltd",
     country: "China",
-    officialUrl: "https://www.goodwe.com/",
+    officialUrl: "https://www.goodwe.com/Energy-Storage-System",
+    manufacturerUrl: "https://www.goodwe.com/",
     description: "GoodWe's Lynx Home series offers premium stackable lithium battery systems for residential and commercial scale application. Highly flexible, safe, and certified to integrate seamlessly with GoodWe hybrid inverters.",
     advantage: "Modular plug-and-play stacking, IP65 protection, highly robust cell-level optimization, 10-year battery warranty.",
     models: [
@@ -167,7 +192,8 @@ export const productDetailsMap: Record<string, ProductDetails> = {
   "solis-batteries": {
     manufacturerName: "Solis - Ningbo Ginlong Technologies Co., Ltd",
     country: "China",
-    officialUrl: "https://www.ginlong.com/",
+    officialUrl: "https://www.solisinverters.com/energy-storage",
+    manufacturerUrl: "https://www.ginlong.com/",
     description: "Solis IntelliHome battery storage systems represent state-of-the-art smart home and light commercial battery modules designed to pair natively with Solis S5 & S6 hybrid inverters for total backup autonomy.",
     advantage: "Pre-configured plug-and-play BMS telemetry, high charging/discharge capacity, lightweight and compact aesthetics.",
     models: [
@@ -180,7 +206,8 @@ export const productDetailsMap: Record<string, ProductDetails> = {
   "industrial-stacks": {
     manufacturerName: "Multi-Brand Advanced Industrial ESS (Sunwoda / BYD / SolaX)",
     country: "China",
-    officialUrl: "https://www.sunwoda.com/",
+    officialUrl: "https://www.sunwodaenergy.com/en/products/",
+    manufacturerUrl: "https://www.bydbatterybox.com/",
     description: "High-capacity containerized and indoor cabinet-level industrial Energy Storage Systems (ESS). Engineered for peak shaving, demand response, and high-load industrial facility backup.",
     advantage: "Liquid-cooled technology for thermal balance, long cycle life (8000+ cycles), integrated gas/fire aerosol suppression, active BMS balancing.",
     models: [
@@ -194,16 +221,16 @@ export const productDetailsMap: Record<string, ProductDetails> = {
 };
 
 export const productsList: ProductItem[] = [
-  { id: "jinko-panels", title: "Jinko Solar N-Type & Bifacial Panels", brand: "Jinko Solar Co., Ltd", type: "Panels", image: "/products/Jinko_tiger.png" },
+  { id: "jinko-panels", title: "Jinko Solar N-Type & Bifacial Panels", brand: "Jinko Solar Co., Ltd", type: "Panels", image: "/products/Jinko_tiger.png", topSelling: true },
+  { id: "solis-inverters", title: "Solis Smart On-Grid Inverters", brand: "Solis - Ningbo Ginlong Technologies", type: "Inverters", image: "/products/Solis_OnGrid.png", topSelling: true },
+  { id: "solis-hybrids", title: "Solis S5 & S6 Intelligent Hybrid Inverters", brand: "Solis - Ningbo Ginlong Technologies", type: "Hybrids", image: "/products/Solis S5 S6 Hybrid.png", topSelling: true },
+  { id: "solis-batteries", title: "Solis IntelliHome Smart Batteries", brand: "Solis Batteries", type: "Batteries", image: "/products/Solis_InttelliHome.png", topSelling: true },
   { id: "ja-solar-panels", title: "JA Solar Monocrystalline Modules", brand: "Shanghai JA Solar Technologies", type: "Panels", image: "/products/JA_Solar_panels.png" },
   { id: "longi-panels", title: "Longi Solar Hi-MO 5 & Hi-MO 7 Series", brand: "Longi Solar Technology Co, Ltd", type: "Panels", image: "/products/Longi_panels.png" },
-  { id: "solis-inverters", title: "Solis Smart On-Grid Inverters", brand: "Solis - Ningbo Ginlong Technologies", type: "Inverters", image: "/products/Solis_OnGrid.png" },
   { id: "goodwe-inverters", title: "GoodWe Residential & Commercial String Inverters", brand: "Jiangsu GoodWe Power Supply", type: "Inverters", image: "/products/Goodwe_ResidentialandCommercial.png" },
   { id: "huawei-inverters", title: "Huawei SUN2000 Smart Energy Inverters", brand: "Huawei Technologies Co., Ltd.", type: "Inverters", image: "/products/Huawie_2000.png" },
   { id: "solax-inverters", title: "SolaX Power High-Efficiency Grid Inverters", brand: "SolaX Power Network Technology", type: "Inverters", image: "/products/Solax.png" },
-  { id: "solis-hybrids", title: "Solis S5 & S6 Intelligent Hybrid Inverters", brand: "Solis - Ningbo Ginlong Technologies", type: "Hybrids", image: "/products/Solis S5 S6 Hybrid.png" },
   { id: "huawei-batteries", title: "Huawei LUNA2000 Smart Battery Systems", brand: "Huawei Technologies Co., Ltd.", type: "Batteries", image: "/products/huawei-luna.png" },
   { id: "goodwe-batteries", title: "GoodWe Lynx Home Low & High Voltage Storage", brand: "GoodWe Batteries", type: "Batteries", image: "/products/GoodWe_Lynx.png" },
-  { id: "solis-batteries", title: "Solis IntelliHome Smart Batteries", brand: "Solis Batteries", type: "Batteries", image: "/products/Solis_InttelliHome.png" },
   { id: "industrial-stacks", title: "Industrial Storage Stack 100 & High Capacity", brand: "Multi-Brand Stack Systems", type: "Batteries", image: "/products/Stack100.png" }
 ];

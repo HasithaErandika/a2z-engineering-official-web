@@ -24,9 +24,9 @@ export const site = {
 
 export const companyStats = {
   yearsExperience: '15+',
-  projectsCompleted: '384',
-  installedCapacityKw: '3,752.58',
-  connectedInfrastructure: '1.6 MW+',
+  projectsCompleted: '391',
+  installedCapacityKw: '3,772.69',
+  connectedInfrastructure: '1.63 MW+',
 } as const;
 
 /** Central image paths — replace SVG placeholders with production WebP/PNG when ready */
@@ -36,6 +36,17 @@ export const images = {
   facilityPreview: '/images/facility-preview.png',
   solarPanelProduct: '/images/solar-panel-product.png',
   inverterProduct: '/images/inverter-product.png',
+  solarArray: '/images/solar_array.png',
+  maintenanceField: '/images/Maintanance.png',
+  industrialRoof: '/images/Industrial_roof.png',
+  solarInstall: '/images/solar.png',
+  panelClean: '/images/panel_clean.png',
+  productsShowcase: '/images/products.png',
+  hvacService: '/images/HVAC.png',
+  telecomService: '/images/telecommunication.png',
+  professionalWorkflow: '/images/professional_workflow.png',
+  civilWork: '/images/CivilWork.png',
+  cctv: '/images/CCTV.png',
 } as const;
 
 export const navLinks = [

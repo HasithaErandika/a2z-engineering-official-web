@@ -4,7 +4,10 @@ import { StatGroup } from '../patterns/StatGroup';
 
 export function About() {
   return (
-    <section id="about" className="relative w-full bg-white px-4 py-20 sm:px-6 sm:py-24 scroll-mt-24">
+    <section
+      id="about"
+      className="relative w-full bg-gradient-to-br from-slate-50 via-emerald-50/25 to-slate-50/80 px-4 py-20 sm:px-6 sm:py-24 scroll-mt-24 border-y border-emerald-100/50"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-[0.95fr_1.05fr] gap-12 lg:gap-16 items-center">
           

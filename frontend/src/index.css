@@ -123,6 +123,8 @@ body {
   .stage-pill,
   .progress-line,
   .live-dot,
+  .energy-flow-path,
+  .energy-node-pulse,
   .animate-slide-left,
   .animate-slide-right {
     animation: none !important;
@@ -242,6 +244,26 @@ body {
 .progress-line {
   width: 42%;
   animation: progressSweep 3.4s ease-in-out infinite;
+}
+
+@keyframes energyFlowDash {
+  0% { stroke-dashoffset: 48; opacity: 0.5; }
+  50% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: -48; opacity: 0.5; }
+}
+
+@keyframes energyNodeGlow {
+  0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+  50% { filter: drop-shadow(0 0 4px rgba(118, 167, 84, 0.45)); }
+}
+
+.energy-flow-path {
+  stroke-dasharray: 12 8;
+  animation: energyFlowDash 2s ease-in-out infinite;
+}
+
+.energy-node-pulse {
+  animation: energyNodeGlow 2.4s ease-in-out infinite;
 }
 
 /* Service Card Hover Glow effect */

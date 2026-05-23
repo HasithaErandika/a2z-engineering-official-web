@@ -81,10 +81,10 @@ export function CTABand({
                   variant="outline"
                   size="lg"
                   className={cn(
-                    'w-full sm:w-auto text-center transition-all duration-200',
+                    'w-full sm:w-auto text-center transition-all duration-200 shadow-sm',
                     isLight
-                      ? 'border-slate-200 text-slate-800 hover:bg-slate-100 hover:text-slate-900'
-                      : 'border-white/15 text-white hover:border-white/30 hover:bg-white/5'
+                      ? 'border-slate-200 bg-white text-slate-800 hover:bg-slate-100 hover:text-slate-900 hover:border-slate-300'
+                      : 'border-slate-700 bg-slate-900 text-white hover:bg-brand-green hover:border-brand-green hover:text-white'
                   )}
                 >
                   {secondaryLabel}

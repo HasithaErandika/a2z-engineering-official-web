@@ -153,19 +153,49 @@ export function ProductDetails() {
                   utility interconnection approvals.
                 </p>
               </div>
-              <div className="flex gap-2 shrink-0">
+              <div className="flex flex-wrap gap-2 shrink-0">
                 <a
                   href={activeDetails.officialUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-10 items-center justify-center gap-1.5 rounded-[var(--radius-md)] border border-slate-200 bg-white px-4 text-xs font-bold uppercase text-slate-700 hover:bg-slate-100 transition-colors focus-visible:ring-2 focus-visible:ring-brand-blue"
                 >
-                  Catalog <ExternalLink className="w-3.5 h-3.5" aria-hidden />
+                  Product catalog <ExternalLink className="w-3.5 h-3.5" aria-hidden />
+                </a>
+                <a
+                  href={activeDetails.manufacturerUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 items-center justify-center gap-1.5 rounded-[var(--radius-md)] border border-slate-200 bg-slate-50 px-4 text-xs font-bold uppercase text-slate-600 hover:bg-slate-100 transition-colors focus-visible:ring-2 focus-visible:ring-brand-blue"
+                >
+                  Manufacturer <ExternalLink className="w-3.5 h-3.5" aria-hidden />
                 </a>
                 <ButtonLink to="/contact?inquiry=product-spec" variant="accent" size="md">
                   Inquire
                 </ButtonLink>
               </div>
+              {productId === 'industrial-stacks' && (
+                <p className="text-[11px] text-slate-500 mt-3">
+                  Also see{' '}
+                  <a
+                    href="https://www.sunwodaenergy.com/en/products/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-brand-blue hover:underline"
+                  >
+                    Sunwoda ESS
+                  </a>
+                  {' · '}
+                  <a
+                    href="https://www.solaxpower.com/products-ess.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-brand-blue hover:underline"
+                  >
+                    SolaX commercial storage
+                  </a>
+                </p>
+              )}
             </Card>
           </div>
         </div>

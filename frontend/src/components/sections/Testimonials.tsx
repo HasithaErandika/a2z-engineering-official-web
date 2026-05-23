@@ -54,7 +54,7 @@ export function Testimonials() {
   };
 
   return (
-    <section className="py-24 bg-slate-50/50 border-t border-slate-200/60 overflow-hidden relative">
+    <section className="py-24 bg-gradient-to-b from-violet-50/40 via-slate-50/80 to-white border-t border-violet-100/60 overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header & Controls Area */}
@@ -181,7 +181,7 @@ export function Testimonials() {
           {/* Gradient fade to indicate more content on the right */}
           <div 
             className={cn(
-              "absolute right-0 top-0 bottom-8 w-24 bg-gradient-to-l from-slate-50/50 to-transparent pointer-events-none transition-opacity duration-300",
+              "absolute right-0 top-0 bottom-8 w-24 bg-gradient-to-l from-violet-50/80 to-transparent pointer-events-none transition-opacity duration-300",
               canScrollRight ? "opacity-100" : "opacity-0"
             )} 
           />

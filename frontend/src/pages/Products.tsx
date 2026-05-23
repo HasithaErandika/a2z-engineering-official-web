@@ -7,7 +7,8 @@ import { PageHero } from '../components/patterns/PageHero';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
-import { productsList, productDetailsMap } from '../data/productDetails';
+import { productsList, productDetailsMap, sortProductsTopSellingFirst } from '../data/productDetails';
+import { WhatA2zProducts } from '../components/products/WhatA2zProducts';
 import { images } from '../data/site';
 
 function ProductVisual({ image, title }: { image: string; title: string }) {
@@ -32,18 +33,20 @@ export function Products() {
 
   const categories = ['All', 'Panels', 'Inverters', 'Hybrids', 'Batteries'];
 
-  const filteredProducts = productsList.filter((product) => {
-    const matchesCategory = selectedCategory === 'All' || product.type === selectedCategory;
-    const details = productDetailsMap[product.id];
-    const q = searchQuery.toLowerCase();
-    const matchesSearch =
-      !q ||
-      product.brand.toLowerCase().includes(q) ||
-      product.title.toLowerCase().includes(q) ||
-      details?.advantage.toLowerCase().includes(q) ||
-      details?.description.toLowerCase().includes(q);
-    return matchesCategory && matchesSearch;
-  });
+  const filteredProducts = sortProductsTopSellingFirst(
+    productsList.filter((product) => {
+      const matchesCategory = selectedCategory === 'All' || product.type === selectedCategory;
+      const details = productDetailsMap[product.id];
+      const q = searchQuery.toLowerCase();
+      const matchesSearch =
+        !q ||
+        product.brand.toLowerCase().includes(q) ||
+        product.title.toLowerCase().includes(q) ||
+        details?.advantage.toLowerCase().includes(q) ||
+        details?.description.toLowerCase().includes(q);
+      return matchesCategory && matchesSearch;
+    })
+  );
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -55,6 +58,8 @@ export function Products() {
       />
 
       <section className="section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-grow space-y-10">
+        <WhatA2zProducts />
+
         <Card variant="muted" className="p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
             {categories.map((cat) => (
@@ -105,16 +110,18 @@ export function Products() {
                   <div className="aspect-[16/10] bg-slate-50 overflow-hidden relative">
                     <ProductVisual image={item.image} title={item.title} />
                     {details && (
-                      <>
-                        <span className="absolute top-4 left-4 z-20 inline-flex items-center gap-1 bg-white/95 border border-slate-100 rounded-full px-2.5 py-1 text-xs font-bold uppercase text-slate-500 shadow-sm">
-                          <Globe className="w-3 h-3 text-brand-blue" aria-hidden /> {details.country}
-                        </span>
-                        {(item.id === 'jinko-panels' || item.id === 'solis-inverters' || item.id === 'solis-batteries' || item.id === 'solis-hybrids') && (
-                          <Badge variant="default" className="absolute top-4 left-24 z-20 bg-orange-500 text-white hover:bg-orange-600 flex items-center px-2 py-0.5 text-xs">
-                            <Star className="w-3 h-3 mr-1" aria-hidden />Top Selling
+                      <div className="absolute top-4 left-4 z-20 flex flex-wrap items-center gap-2 max-w-[calc(100%-5rem)]">
+                        {item.topSelling && (
+                          <Badge variant="topSelling" className="px-2.5 py-1 text-[10px] tracking-widest">
+                            <Star className="w-3 h-3 fill-amber-100 text-amber-50 mr-1" aria-hidden />
+                            Top selling
                           </Badge>
                         )}
-                      </>
+                        <span className="inline-flex items-center gap-1 bg-white/95 border border-slate-100 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase text-slate-500 shadow-sm backdrop-blur-sm">
+                          <Globe className="w-3 h-3 text-brand-blue shrink-0" aria-hidden />
+                          {details.country}
+                        </span>
+                      </div>
                     )}
                     <Badge variant="accent" className="absolute bottom-4 right-4 z-20">
                       {item.type}
@@ -144,17 +151,30 @@ export function Products() {
                       </div>
                     )}
 
-                    <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
                       <span className="text-xs font-mono text-slate-400 font-bold uppercase">
                         {details?.models ? `${details.models.length} series` : 'Direct integration'}
                       </span>
-                      <button
-                        type="button"
-                        onClick={() => navigate(`/products/${item.id}`)}
-                        className="inline-flex items-center gap-1 text-xs font-bold text-brand-blue uppercase tracking-wider min-h-[44px] focus-visible:ring-2 focus-visible:ring-brand-blue rounded-sm"
-                      >
-                        View more <ArrowRight className="w-3.5 h-3.5" aria-hidden />
-                      </button>
+                      <div className="flex items-center gap-3">
+                        {details && (
+                          <a
+                            href={details.officialUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-flex items-center gap-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider hover:text-brand-blue min-h-[44px] focus-visible:ring-2 focus-visible:ring-brand-blue rounded-sm"
+                          >
+                            Catalog <Globe className="w-3 h-3" aria-hidden />
+                          </a>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => navigate(`/products/${item.id}`)}
+                          className="inline-flex items-center gap-1 text-xs font-bold text-brand-blue uppercase tracking-wider min-h-[44px] focus-visible:ring-2 focus-visible:ring-brand-blue rounded-sm"
+                        >
+                          View more <ArrowRight className="w-3.5 h-3.5" aria-hidden />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </Card>
