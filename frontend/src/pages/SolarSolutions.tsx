@@ -14,6 +14,120 @@ import { PageHero } from '../components/patterns/PageHero';
 import { CTABand } from '../components/patterns/CTABand';
 import { images } from '../data/site';
 
+// Days in each calendar month
+const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+// Actual daily generation profiles (kWh/day) for 5kW, 10kW, 15kW, 20kW, and 40kW systems in Sri Lanka
+const SOLAR_PROFILES: Record<number, number[]> = {
+  5: [29.4, 30.9, 32.0, 27.2, 23.9, 22.5, 22.6, 24.3, 26.1, 26.2, 26.2, 26.7],
+  10: [58.4, 61.9, 64.6, 55.5, 49.3, 46.3, 46.6, 49.7, 52.9, 52.7, 52.4, 53.1],
+  15: [86.4, 89.5, 90.2, 74.7, 64.8, 60.0, 60.9, 66.6, 72.9, 75.0, 76.4, 78.6],
+  20: [87.4, 101.0, 118.0, 112.0, 107.0, 103.0, 102.0, 103.0, 101.0, 91.3, 82.7, 78.9],
+  40: [207.0, 223.0, 237.0, 208.0, 188.0, 178.0, 178.0, 188.0, 197.0, 192.0, 187.0, 188.0]
+};
+
+export const getSolarProfileForKW = (kw: number): number[] => {
+  if (SOLAR_PROFILES[kw]) return SOLAR_PROFILES[kw];
+  const keys = Object.keys(SOLAR_PROFILES).map(Number).sort((a, b) => a - b);
+  
+  if (kw <= keys[0]) {
+    return SOLAR_PROFILES[5].map(v => v * (kw / 5));
+  }
+  if (kw >= keys[keys.length - 1]) {
+    return SOLAR_PROFILES[40].map(v => v * (kw / 40));
+  }
+  
+  for (let i = 0; i < keys.length - 1; i++) {
+    const k1 = keys[i];
+    const k2 = keys[i + 1];
+    if (kw >= k1 && kw <= k2) {
+      const p1 = SOLAR_PROFILES[k1];
+      const p2 = SOLAR_PROFILES[k2];
+      const t = (kw - k1) / (k2 - k1);
+      return p1.map((v, idx) => v + t * (p2[idx] - v));
+    }
+  }
+  
+  return SOLAR_PROFILES[5].map(v => v * (kw / 5));
+};
+
+function SolarPerformanceChart({ profile, dailyConsumption }: { profile: number[]; dailyConsumption: number }) {
+  const PL = 40; // padding left (Y-axis labels)
+  const PT = 24; // padding top
+  const PB = 28; // padding bottom (month labels)
+  const W = 700; // total SVG width
+  const H = 240; // total SVG height
+  const chartH = H - PT - PB;
+  const chartW = W - PL;
+  
+  // Find maximum value to scale Y axis dynamically
+  const peakVal = Math.max(...profile, dailyConsumption);
+  const maxVal = Math.ceil(Math.max(10, peakVal) / 10) * 10;
+  
+  const slotW = chartW / 12;
+  const barW = Math.min(30, slotW * 0.55);
+  
+  const toY = (v: number) => PT + chartH - (v / maxVal) * chartH;
+  const toBarH = (v: number) => (v / maxVal) * chartH;
+  
+  // Create 5 grid line ticks
+  const gridLines = Array.from({ length: 5 }, (_, i) => Math.round((maxVal / 4) * i));
+
+  // Wavy consumption curve path points (represented as an area chart in background)
+  const consumptionMultipliers = [1.02, 0.98, 0.95, 0.92, 0.96, 1.05, 1.12, 1.10, 1.05, 0.98, 0.92, 0.95];
+  const consPoints = profile.map((_, i) => dailyConsumption * consumptionMultipliers[i]);
+  
+  // Construct polygon and line point coordinates for the consumption area
+  const polyPoints = [
+    `${PL},${H - PB}`,
+    ...consPoints.map((val, i) => {
+      const cx = PL + i * slotW + slotW / 2;
+      return `${cx},${toY(val)}`;
+    }),
+    `${PL + 11 * slotW + slotW / 2},${H - PB}`
+  ].join(' ');
+
+  const linePoints = consPoints.map((val, i) => {
+    const cx = PL + i * slotW + slotW / 2;
+    return `${cx},${toY(val)}`;
+  }).join(' ');
+
+  return (
+    <div className="w-full overflow-x-auto">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full min-w-[480px]" style={{ height: '260px' }}>
+        {/* Y-axis grid lines + labels */}
+        {gridLines.map(v => (
+          <g key={v}>
+            <line x1={PL} y1={toY(v)} x2={W} y2={toY(v)} stroke="#e2e8f0" strokeWidth="0.8" strokeDasharray={v === 0 ? '0' : '4 3'} />
+            <text x={PL - 6} y={toY(v) + 4} textAnchor="end" fontSize="9" fill="#94a3b8" fontFamily="monospace">{v}</text>
+          </g>
+        ))}
+        
+        {/* Consumption area curve (rendered behind generation bars) */}
+        <polygon points={polyPoints} fill="#cbd5e1" opacity="0.35" />
+        <polyline points={linePoints} fill="none" stroke="#94a3b8" strokeWidth="1.2" strokeDasharray="3 3" />
+
+        {/* Generation Bars */}
+        {profile.map((val, i) => {
+          const cx = PL + i * slotW + slotW / 2;
+          const bx = cx - barW / 2;
+          return (
+            <g key={MONTH_NAMES[i]}>
+              {/* Generation bar (green) */}
+              <rect x={bx} y={toY(val)} width={barW} height={toBarH(val)} fill="#4ade80" rx="3" ry="3" />
+              {/* Generation label */}
+              <text x={cx} y={toY(val) - 5} textAnchor="middle" fontSize="8" fontWeight="700" fill="#374151">{val.toFixed(1)}</text>
+              {/* Month label */}
+              <text x={cx} y={H - 6} textAnchor="middle" fontSize="9" fill="#64748b">{MONTH_NAMES[i]}</text>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
 export function SolarSolutions() {
   // 1. Calculator State Parameters
   const [monthlyBill, setMonthlyBill] = useState<number>(45000);
@@ -53,13 +167,56 @@ export function SolarSolutions() {
 
   const calculatedKWh = calculateKWhFromBill(monthlyBill);
 
-  // 3. Recommended Sizing: At least 5 kW baseline as recommended by A2Z standard configuration
-  // Average solar generation in Sri Lanka is 120 kWh per month per 1 kW (worst-case 5kW generates 600 units)
-  const mathematicalSizing = calculatedKWh / 120;
-  const recommendedKW = Math.max(5.0, Math.round(mathematicalSizing * 10) / 10);
-  
-  // 620W panels is standard for A2Z high-yield installations
-  const panelCount = Math.ceil((recommendedKW * 1000) / 620);
+  // 3. Recommended Sizing: Map monthly bill ranges to recommended system capacity
+  // - LKR 1,000 - 20,000 -> 5kW
+  // - LKR 20,000 - 50,000 -> 10kW
+  // - LKR 50,000 - 80,000 -> 15kW
+  // - LKR 80,000 - 110,000 -> 20kW
+  // - LKR 110,000 - 140,000 -> 25kW
+  // - LKR 140,000 - 170,000 -> 30kW
+  // - LKR 170,000 - 200,000 -> 35kW
+  // - LKR 200,000+ -> 40kW
+  const getRecommendedKW = (bill: number): number => {
+    if (bill <= 20000) return 5.0;
+    if (bill <= 50000) return 10.0;
+    if (bill <= 80000) return 15.0;
+    if (bill <= 110000) return 20.0;
+    if (bill <= 140000) return 25.0;
+    if (bill <= 170000) return 30.0;
+    if (bill <= 200000) return 35.0;
+    return 40.0;
+  };
+
+  const recommendedKW = getRecommendedKW(monthlyBill);
+
+  // Helper to calculate exact A2Z engineering panel sizing based on standard inverter AC sizing
+  const getPanelCount = (kw: number): number => {
+    if (kw <= 5) return 10;
+    const points = [
+      { kw: 5, panels: 10 },
+      { kw: 10, panels: 18 },
+      { kw: 15, panels: 30 },
+      { kw: 20, panels: 38 },
+      { kw: 40, panels: 76 }
+    ];
+    // Bounding point interpolation
+    for (let i = 0; i < points.length - 1; i++) {
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      if (kw >= p1.kw && kw <= p2.kw) {
+        const t = (kw - p1.kw) / (p2.kw - p1.kw);
+        return Math.round(p1.panels + t * (p2.panels - p1.panels));
+      }
+    }
+    // Extrapolate above 40kW
+    return Math.round(kw * (76 / 40));
+  };
+
+  const panelCount = getPanelCount(recommendedKW);
+  // DC Array Capacity calculated from actual panels: each standard panel is 620W
+  const dcCapacityKW = Math.round((panelCount * 620) / 100) / 10;
+  // Dynamic DC/AC oversizing ratio
+  const dcAcRatio = Math.round((dcCapacityKW / recommendedKW) * 1000) / 1000;
   const requiredArea = Math.ceil(recommendedKW * 75); // ~75 sq ft per kW
 
   // 4. Net-Accounting Export Rates (Ceylon Electricity Board standard rooftop buyback)
@@ -79,8 +236,11 @@ export function SolarSolutions() {
   const costPerKW = 235000;
   const initialInvestment = Math.round(recommendedKW * costPerKW);
   
-  // Monthly solar generation = recommendedKW * 120 kWh (5kW generates 600 units)
-  const monthlyGeneration = recommendedKW * 120;
+  // Get the actual monthly daily generation profile for this system size
+  const solarProfile = getSolarProfileForKW(recommendedKW);
+  
+  // Total actual monthly generation (kWh) is the sum of daily generations * days in month
+  const monthlyGeneration = solarProfile.reduce((sum, dailyGen, i) => sum + dailyGen * DAYS_IN_MONTH[i], 0);
   
   // Under Net-Accounting, excess energy above consumption is sold back to the grid
   const excessExportKWh = Math.max(0, monthlyGeneration - calculatedKWh);
@@ -89,7 +249,6 @@ export function SolarSolutions() {
   // Monthly return consists of completely offsetting the monthly bill to Rs 0 + actual export revenue cash earnings
   const monthlySavings = monthlyBill + exportEarnings;
   const annualSavings = monthlySavings * 12;
-  const paybackPeriod = Math.round((initialInvestment / annualSavings) * 10) / 10;
   const lifetimeSavings = Math.round((annualSavings * 25 * 0.88) - initialInvestment); // 12% lifetime degradation adjustment
 
   const systems = [
@@ -270,48 +429,56 @@ export function SolarSolutions() {
                 
                 <div className="grid sm:grid-cols-3 gap-6">
                   <div className="space-y-1">
-                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">Recommended Size</span>
+                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">Inverter AC Size</span>
                     <p className="text-2xl font-black text-brand-dark">{recommendedKW} <span className="text-xs font-bold text-slate-400">kW</span></p>
                   </div>
                   <div className="space-y-1">
-                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">620W Panels Needed</span>
-                    <p className="text-2xl font-black text-brand-dark">~{panelCount} <span className="text-xs font-bold text-slate-400">Units</span></p>
+                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">DC Array Capacity</span>
+                    <p className="text-2xl font-black text-amber-600">{dcCapacityKW} <span className="text-xs font-bold text-slate-400">kW</span></p>
                   </div>
+                  <div className="space-y-1">
+                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">620W Panels (DC/AC: {dcAcRatio})</span>
+                    <p className="text-2xl font-black text-brand-dark">{panelCount} <span className="text-xs font-bold text-slate-400">Units</span></p>
+                  </div>
+
+                  <div className="space-y-1">
+                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">Est. Consumption</span>
+                    <p className="text-2xl font-black text-slate-700">{Math.round(calculatedKWh)} <span className="text-xs font-bold text-slate-400">kWh/mo</span></p>
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">Est. Solar Generation</span>
+                    <p className="text-2xl font-black text-brand-green">{Math.round(monthlyGeneration)} <span className="text-xs font-bold text-slate-400">kWh/mo</span></p>
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">Est. Cash Export Income</span>
+                    <p className="text-2xl font-black text-brand-blue">Rs. {Math.round(exportEarnings).toLocaleString()}</p>
+                  </div>
+
                   <div className="space-y-1">
                     <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">Required Roof Area</span>
-                    <p className="text-2xl font-black text-brand-green">{requiredArea} <span className="text-xs font-bold text-slate-400">Sq.Ft.</span></p>
+                    <p className="text-2xl font-black text-slate-700">{requiredArea} <span className="text-xs font-bold text-slate-400">Sq.Ft.</span></p>
                   </div>
                   <div className="space-y-1">
-                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">CEB Export Buyback Rate</span>
-                    <p className="text-2xl font-black text-brand-blue">Rs. {exportRate.toFixed(2)}</p>
+                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">Export Rate (CEB)</span>
+                    <p className="text-2xl font-black text-slate-700">Rs. {exportRate.toFixed(2)}</p>
                   </div>
                   <div className="space-y-1">
-                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">Calculated Monthly Consumption</span>
-                    <p className="text-2xl font-black text-slate-800">{Math.round(calculatedKWh)} <span className="text-xs font-bold text-slate-400">kWh</span></p>
-                  </div>
-                  <div className="space-y-1">
-                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">Capital Payback Period</span>
-                    <p className="text-2xl font-black text-brand-green">{paybackPeriod} <span className="text-xs font-bold text-slate-400">Years</span></p>
+                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-wider block">Est. 25-Yr Net Earnings</span>
+                    <p className="text-2xl font-black text-brand-green">Rs. {(lifetimeSavings / 1000000).toFixed(1)}M</p>
                   </div>
                 </div>
               </div>
 
-              <div className="border-t border-slate-100 pt-5">
-                <div className="flex justify-between items-baseline mb-2">
-                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Projected Capital Sizing Cost</span>
-                  <span className="text-sm font-black text-slate-800">Rs. {initialInvestment.toLocaleString()}</span>
+              {/* Notes */}
+              <div className="space-y-2">
+                <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg flex items-start gap-2.5 text-[10px] text-amber-700 leading-relaxed select-none">
+                  <Info className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                  <p><strong>Note:</strong> This is not an exact calculation. This is an idea to get only. Actual system performance depends on site conditions, shading, orientation, and grid parameters.</p>
                 </div>
-                <div className="flex justify-between items-baseline">
-                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Estimated 25-Year Net Earnings</span>
-                  <span className="text-lg font-black text-brand-green">Rs. {lifetimeSavings.toLocaleString()}</span>
+                <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg flex items-start gap-2.5 text-[10px] text-slate-500 leading-relaxed select-none">
+                  <Info className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+                  <p><strong>Note:</strong> The project cost may vary due to the components and configurations selected. Contact us for an accurate project quotation.</p>
                 </div>
-              </div>
-
-              <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-lg flex items-start gap-2.5 text-[10px] text-slate-500 leading-relaxed select-none">
-                <Info className="w-4 h-4 text-brand-green shrink-0 mt-0.5" />
-                <p>
-                  *Sizing is dynamically calculated to match 100% of your energy consumption under standard meteorological conditions in Sri Lanka. Buyback calculations apply CEB Net-Accounting tariff slabs.
-                </p>
               </div>
 
             </div>
@@ -388,6 +555,27 @@ export function SolarSolutions() {
             </div>
           )}
 
+        </div>
+
+        {/* Solar Performance Chart */}
+        <div className="bg-white border border-slate-200/80 rounded-2xl p-6 lg:p-10 shadow-sm">
+          <div className="mb-6">
+            <span className="text-[9px] font-bold text-brand-blue uppercase tracking-widest block mb-1">System Performance</span>
+            <h3 className="text-xl font-extrabold text-slate-950 tracking-tight">Monthly Solar Generation vs Consumption</h3>
+            <p className="text-xs text-slate-500 mt-1">Reference profile for a {recommendedKW} kW system under Sri Lanka standard irradiance conditions (kWh / day).</p>
+          </div>
+          {/* Legend */}
+          <div className="flex items-center gap-6 mb-4">
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-sm bg-brand-green inline-block"></span>
+              <span className="text-[10px] font-semibold text-slate-500">New System Generation (kWh/day)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-sm bg-slate-400 inline-block opacity-40"></span>
+              <span className="text-[10px] font-semibold text-slate-500">Consumption (kWh/day)</span>
+            </div>
+          </div>
+          <SolarPerformanceChart profile={solarProfile} dailyConsumption={calculatedKWh / 30} />
         </div>
 
         {/* Section 3: Engineering Sizing Benefits */}
