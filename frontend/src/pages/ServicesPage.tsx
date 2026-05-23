@@ -6,7 +6,6 @@ import {
   Wrench,
   CheckCircle2,
   ArrowRight,
-  Shield,
   Video,
 } from 'lucide-react';
 import { PageHero } from '../components/patterns/PageHero';
